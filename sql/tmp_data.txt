@@ -1,0 +1,35 @@
+
+--
+-- 表的结构 `rewardset`
+--
+
+CREATE TABLE IF NOT EXISTS `rewardset` (
+`id` int(11) NOT NULL COMMENT '标识',
+  `rank` int(11) NOT NULL COMMENT '名次',
+  `rate` int(11) NOT NULL COMMENT '奖金比例',
+  `moneyFunds` double NOT NULL COMMENT '资金总额',
+  `moneyRewards` int(11) NOT NULL COMMENT '奖金总额',
+  `money` int(11) NOT NULL COMMENT '资金额',
+  `rate2pick` int(11) NOT NULL COMMENT '提取奖金比例',
+  `lasttime` datetime NOT NULL COMMENT '上次设置时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `rewardset`
+--
+ALTER TABLE `rewardset`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `rewardset`
+--
+ALTER TABLE `rewardset`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';

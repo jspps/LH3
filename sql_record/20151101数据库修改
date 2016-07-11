@@ -1,0 +1,38 @@
+TRUNCATE TABLE `optquestion`;
+OPTIMIZE TABLE `optquestion`;
+ALTER TABLE `optquestion` CHANGE `A` `content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '题的内容';
+ALTER TABLE `optquestion` DROP `title`;
+
+// 以下还未执行
+TRUNCATE TABLE `product`;
+OPTIMIZE TABLE `product`;
+
+TRUNCATE TABLE `product0examtype`;
+OPTIMIZE TABLE `product0examtype`;
+
+TRUNCATE TABLE `product0examtype`;
+OPTIMIZE TABLE `product0examtype`;
+
+TRUNCATE TABLE `recordanswer`;
+OPTIMIZE TABLE `recordanswer`;
+
+TRUNCATE TABLE `recordques4exam`;
+OPTIMIZE TABLE `recordques4exam`;
+
+TRUNCATE TABLE `shoppingcart`;
+OPTIMIZE TABLE `shoppingcart`;
+
+TRUNCATE TABLE `examcatalog`;
+OPTIMIZE TABLE `examcatalog`;
+
+TRUNCATE TABLE `itms4day`;
+OPTIMIZE TABLE `itms4day`;
+
+TRUNCATE TABLE `kind`;
+OPTIMIZE TABLE `kind`;
+
+TRUNCATE TABLE `boughtkinds`;
+OPTIMIZE TABLE `boughtkinds`;
+
+TRUNCATE TABLE `exam`;
+OPTIMIZE TABLE `exam`;

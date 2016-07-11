@@ -1,0 +1,14 @@
+启动tomcat后
+得注意下,掉下下面的方法
+http://121.40.34.188/LH3/change4Load?isWindows=false
+http://121.40.34.188/LH3Manager/change4Load?isWindows=false
+
+http://127.0.0.1:8080/LH3/change4Load?isWindows=true
+http://127.0.0.1:8080/LH3Manager/change4Load?isWindows=true
+
+注册为学习中心
+http://1010xue.com/regLhub
+http://1010xue.com/regAgent
+http://1010xue.com/xxzx
+http://1010xue.com/dls
+http://1010xue.com/LH3Manager

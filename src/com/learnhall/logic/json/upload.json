@@ -1,0 +1,6 @@
+{
+	"saveWindows":"/LH3/jsp/upload/imgs",
+	"urlWindows":"http://127.0.0.1:8080/LH3/jsp/upload/imgs",
+	"saveLinux":"/upload/imgs",
+	"urlLinux":"http://121.40.34.188/upload/imgs"
+}

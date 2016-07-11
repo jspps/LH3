@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib>
+	<tlib-version>1.1</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>date</short-name>
+	<tag>
+		<name>pt4lh</name>
+		<tag-class>com.learnhall.page4hl.PageTag4LH</tag-class>
+		<body-content>empty</body-content>
+		<description><![CDATA[分页查询结果]]></description>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description><![CDATA[分页查询结果集的名称]]></description>
+		</attribute>
+		<attribute>
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description><![CDATA[form表单的请求地址]]></description>
+		</attribute>
+	</tag>
+
+</taglib>

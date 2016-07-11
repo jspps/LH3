@@ -1,0 +1,7 @@
+---  删除数据库
+
+DROP DATABASE `learnhall3`;
+DROP DATABASE `learnhall3_log`;
+
+DROP DATABASE `learnhall3_cfg`;
+DROP DATABASE `learnhall3_design`;

@@ -1,0 +1,47 @@
+account :帐号(type:1管理员,2学习中心,3代理商,4学生,5程序,6美工),登录ID,PWD,phone,alipay,money(总,可用,冻结),status(状态,1被删除)
+adcourses :课程表(管理者设置,学习中心选用)
+adprivilege :权限标(管理者权限表)
+adqdepartment :题库分类,类别,大分类
+aduser :管理员
+agent :代理商
+answer : 回答提问记录表
+appraise :评论,点评
+ask :提问
+boughtkinds :已购套餐表
+cfgs :配置
+courseopened :开通课程(对体验学员开通体验课程)
+customer :学员
+errorfeedback :错误反馈(试卷错题反馈)
+exam :试卷
+exam2kind :试卷-套餐中间表
+examcatalog :试卷目录结构
+examtype :试卷类型表（章节练习，历年真题，全真模拟，考前押题，知识要点，ITM辅助）
+exchangermb : 提现申请记录表
+itms4auto :ITM辅助的智能组题的题型表
+itms4day :ITM辅助的进步曲线数据统计表
+kind :套餐
+kindclass :套餐分类（vip，精品，x值）
+learnhub :学习中心
+msg :后台消息
+openkind4customer : 开通套餐体验用户
+openkind4third : 为第三方开通套餐体验限定表(由这个可以开通体验用户)
+optquestion :题(type[1单,2多,3判断,4填空,5简答,6论述,7案例分析],type=7时gid[1单,2多,3判断,4填空,5简答])
+orders :订单
+orders4profit : 订单提成记录
+product :产品(学习中心生产的产品，要通过设置产品目录结构,产品所包含的套餐，提交审核产品)
+product0examtype :产品目录结构-试题类别(章,历)，有价格,跟小套餐无差别
+record4orders : 记录订单回调记录
+record4seeanswer  : 记录谁给钱查看了答案
+recordanswer : 考卷记录(记录某个人做题时候自己写的答案)
+recordfee4customer :学员_人民币收入支出记录(1收入,2支出)
+recordkbi4customer :学员_考币收入支出记录(1收入,2支出)
+recordques4exam : 考卷中每个题出错的次数(出错次数,0,表示未错,ITMS的错题训练也是从这个地方读取)
+rnk4profit : 利润分红_排行榜
+shoppingcart :购物车
+
+
+四张用户表(aduser,lhub,agent,customer)和account表是一一对应关系
+
+adqdepartment:题库分类  ---> adqmajor:专业 -->adcourses:课程表
+
+product --> product0examtype --> exam --> examcatalog --> optquestion

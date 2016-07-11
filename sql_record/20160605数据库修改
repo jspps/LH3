@@ -1,0 +1,6 @@
+ALTER TABLE `recordanswer` ADD `lhubid` INT NOT NULL DEFAULT '0' COMMENT '所属学习中心' ;
+ALTER TABLE `account` ADD `lasttime` DATETIME NOT NULL COMMENT '最后操作时间' ;
+
+
+UPDATE `learnhall3`.`recordanswer` SET `lhubid` = '1';
+UPDATE `account` SET `lasttime`= now();

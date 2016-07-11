@@ -1,0 +1,1 @@
+ALTER TABLE `optquestion` ADD `imgPic` VARCHAR(256) NOT NULL COMMENT '图片补充' ;

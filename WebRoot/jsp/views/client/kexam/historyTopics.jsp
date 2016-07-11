@@ -1,0 +1,105 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://page.bowlong.com/jsp/tags" prefix="p"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<base href="<%=basePath%>" />
+<title>体验模考主页_历年真题</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="keywords" content="尚学了,尚学,3学了,3学" />
+<meta http-equiv="description" content="体验模考主页_历年真题" />
+<link rel="shortcut icon" href="jsp/imgs/ico.jpg" />
+<link rel="stylesheet" type="text/css" href="jsp/css/style_client.css" />
+<script type="text/javascript" language="JavaScript" charset="utf-8"
+	src="jsp/js/jquery-1.11.1.js"></script>
+<script type="text/javascript" language="JavaScript">	
+	function click2BuyKind(kindId){
+		$("#kind_kindId").val(kindId);
+		$("#fm_2buy_kind").submit();
+	}
+	
+	function intoExamRoom(examid) {
+		$("#examid").val(examid);
+		$("#fm_examId").submit();
+	};
+</script>
+<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+</head>
+
+<body>
+	<!--导航条-->
+	<jsp:include page="../top/head.jsp"></jsp:include>
+
+	<!--内容-->
+	<jsp:include page="midMenu.jsp"></jsp:include>
+	<div>
+		<div class="mk_tims_dbuttom_cont">
+			<div class="mk_tims_nr">
+				<span class="mk_zsyd_title">${kind.nmProduct }<br /> <label
+					style="color:#939393; font-size:15px;">历年真题</label> </span>
+					
+				<c:forEach items="${pageEnt.listPages }" var="item" varStatus="itemStatus">
+					<c:if test="${isBuy || itemStatus.index == 0}">
+					<div class="mk_lnzt_cont"
+						onmouseout="this.className='mk_lnzt_cont'"
+						onmouseover="this.className='mk_lnzt_cont_hover'"
+						onclick="intoExamRoom(${item.id})">
+						<span class="mk_lnzt_jrkc">
+							<a href="javascript:void(0);">进入考场</a>
+						</span>
+						<span class="mk_lnzt_title">${item.name }</span> 
+						<c:set var="numQues" value="0"></c:set>
+						<c:forEach items="${map4num}" var="itmap">
+							<c:if test="${itmap.key == item.id }">
+								<c:set var="numQues" value="${itmap.value }"></c:set>
+							</c:if>
+						</c:forEach>
+						<span class="mk_lnzt_list">总题量：${numQues}</span> 
+						<span class="mk_lnzt_list">总分数：${item.score}</span>
+						<!--  
+						<span class="mk_lnzt_list">
+							我的分数：<label style="color:#0060ff;">未做</label>
+						</span>
+						<span class="mk_lnzt_list">
+							正确率：<label style="color:#0060ff;">未做</label>
+						</span>
+						 -->
+					</div>
+					</c:if>
+				</c:forEach>
+				<form action="client/examing" method="post" id="fm_examId">
+					<input type="hidden" id="examid" name="examid"/>
+				</form>
+			</div>
+			<div class="mk_tims_db">
+				<img src="jsp/imgs/client/115.jpg" />
+			</div>
+
+			<div style="clear:both;"></div>
+
+			<c:choose>
+			<c:when test="${isBuy }">
+			<!--分页-->
+			<p:pageTag name="pageEnt" action="client/historyTopics" />
+			</c:when>
+			</c:choose>
+		</div>
+	</div>
+	<!--底部-->
+	<jsp:include page="../top/bot.jsp"></jsp:include>
+</body>
+</html>

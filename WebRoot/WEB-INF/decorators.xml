@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+	"http://tuckey.org/res/dtds/urlrewrite4.0.dtd">
+<decorators defaultdir="/jsp/views/layout/">
+	<excludes>
+		<pattern>/jsp/views/home.jsp</pattern>
+	</excludes>
+
+	<!-- 个人中心 -->
+	<decorator name="onesigle" page="home_onesigle.jsp">
+		<pattern>/sigle/*</pattern>
+		<pattern>/onesigle/*</pattern>
+	</decorator>
+
+	<!-- 需要一个默认的 -->
+	<decorator name="default" page="home_client.jsp">
+		<pattern>/*</pattern>
+	</decorator>
+</decorators>

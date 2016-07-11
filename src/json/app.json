@@ -1,0 +1,82 @@
+{
+	"APP":{
+	    "NAME"        :"learnhall3.Game",
+	    "VER"         :1.0,
+	    "GAME_ID"     :"1000",
+	    "TCP_PORT"    :10101,
+	    "WEB_PORT"    :10102,
+	    "SHUTDOWNPORT":10201,
+	    "GATE_HOST" :"121.40.34.188",
+	    "GATE_PORT_TCP":10301,
+	    "GATE_PORT_WEB":10302,
+	    "SHUTDOWNPORT_GATE":10202,
+	    "GMGT_HOST" :"127.0.0.1",
+	    "GMGT_PORT_TCP":10401,
+	    "pbUrlSave":"pb/",
+	    "pbUrlGet":"pb/"
+	},
+	"REDIS":{
+		"maxActiveUnlimite":-1,
+		"maxIdleUnlimite":-1,
+		"testOnBorrow":true,
+		"testOnReturn":true,
+		"testWhileIdle":true,
+		"timeBetweenEvictionRunsMillis":60000,
+		"minEvictableIdleTimeMillis":30000,
+		"numTestsPerEvictionRun":3000,
+		"maxActive":4000,
+		"maxIdle":3000,
+		"minIdle":10,
+		"maxWait":10000,
+		"timeOut":15000,
+		"host":"127.0.0.1",
+		"port":6366,
+		"defPort":6379
+	},
+	"DATASOURCE":{
+		"design":{
+			"driverClassName":"com.mysql.jdbc.Driver", 
+			"url":"jdbc:mysql://127.0.0.1:3306/learnhall3_design?autoReconnect=true&useUnicode=true&characterEncoding=utf-8",
+			"username":"root",
+			"password":"12345670",
+			"maxActive":64,
+			"maxIdle":4,
+			"maxWait":60000,
+			"removeAbandoned":true,
+			"removeAbandonedTimeout":10
+		},
+		"ds":{
+			"driverClassName":"com.mysql.jdbc.Driver", 
+			"url":"jdbc:mysql://127.0.0.1:3306/learnhall3?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true",
+			"username":"root",
+			"password":"12345670",
+			"maxActive":64,
+			"maxIdle":4,
+			"maxWait":60000,
+			"removeAbandoned":true,
+			"removeAbandonedTimeout":10
+		},
+		"cfg":{
+			"driverClassName":"com.mysql.jdbc.Driver", 
+			"url":"jdbc:mysql://127.0.0.1:3306/learnhall3_cfg?autoReconnect=true&useUnicode=true&characterEncoding=utf-8",
+			"username":"root",
+			"password":"12345670",
+			"maxActive":64,
+			"maxIdle":4,
+			"maxWait":60000,
+			"removeAbandoned":true,
+			"removeAbandonedTimeout":10
+		},
+		"log":{
+			"driverClassName":"com.mysql.jdbc.Driver", 
+			"url":"jdbc:mysql://127.0.0.1:3306/learnhall3_log?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true",
+			"username":"root",
+			"password":"12345670",
+			"maxActive":64,
+			"maxIdle":4,
+			"maxWait":60000,
+			"removeAbandoned":true,
+			"removeAbandonedTimeout":10
+		}
+	}
+}

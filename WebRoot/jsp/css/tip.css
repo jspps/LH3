@@ -1,0 +1,125 @@
+@charset "utf-8";
+/* CSS Document */
+/*弹出窗*/
+.tck_cont_style{
+	width:560px;
+	margin:80px auto;
+	height:352px;
+}
+.tck_cont_left{
+	width:184px;
+	float:left;
+	height:352px;
+}
+.tck_cont_right{
+	width:376px;
+	float:left;
+	height:352px;
+	background:#FFF;
+}
+.tck_cont_close ,.tck_cont_close_hover{
+	width:373px;
+	float:left;
+	height:26px;
+	cursor:pointer;
+	padding-top:3px;
+	background:url(../imgs/client/174.jpg) right no-repeat;
+}
+.tck_cont_close_hover{
+	background:url(../imgs/client/175.jpg) right no-repeat;
+}
+.tck_cont_nr ,.tck_lscj_cont{
+	width:346px;
+	float:left;
+	padding:50px 15px 0px 15px;
+}
+.tck_lscj_cont{
+	width:657px;
+	padding-top:15px;
+}
+.tck_cont_title{
+	width:346px;
+	float:left;
+	margin-bottom:10px;
+}
+.tck_cont_ipnut{
+	width:344px;
+	float:left;
+	height:40px;
+	line-height:40px;
+	color:#6f6f6f;
+	border:1px solid #cfcfcf;
+	margin-bottom:15px;
+}
+.tck_cont_bottom ,.tck_cont_bottom_qx{
+	width:162px;
+	float:left;
+	height:46px;
+	text-align:center;
+	line-height:36px;
+	font-family:"微软雅黑";
+	font-size:17px;
+	font-weight:bold;
+	margin-left:80px;
+	margin-top:40px;
+	background:url(../imgs/client/177.jpg) no-repeat;
+}
+.tck_cont_bottom a:link{
+	text-decoration:none;
+	color:#FFF;
+}
+.tck_cont_bottom a:visited{
+	text-decoration:none;
+	color:#FFF;
+}
+.tck_cont_bottom a:hover{
+	text-decoration:none;
+	color:#FFF;
+}
+.tck_cont_bottom_qx{
+	margin-left:10px;
+	background:url(../imgs/client/176.jpg) no-repeat;
+}
+.tck_cont_bottom_qx a:link{
+	text-decoration:none;
+	color:#FFF;
+}
+.tck_cont_bottom_qx a:visited{
+	text-decoration:none;
+	color:#FFF;
+}
+.tck_cont_bottom_qx a:hover{
+	text-decoration:none;
+	color:#FFF;
+}
+.tck_lscj_title{
+	width:657px;
+	float:left;
+	text-align:center;
+	font-family:"微软雅黑";
+	font-size:15px;
+}
+.tck_tscj_table_cont{
+	width:657px;
+	float:left;
+	height:225px;
+	margin-top:25px;
+	min-height:225px;
+	overflow-y:auto;
+}
+.tck_tscj_table_cont table a:link{
+	text-decoration:underline;
+	color:#2796e5;
+}
+.tck_tscj_table_cont table a:visited{
+	text-decoration:underline;
+	color:#2796e5;
+}
+.tck_tscj_table_cont table a:hover{
+	text-decoration:none;
+	color:#ff6600;
+}
+.tck_tscj_table_cont table td{
+	color:#6f6f6f;
+	border-bottom:1px dashed #e0e0e0;
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+	"http://tuckey.org/res/dtds/urlrewrite4.0.dtd">
+<urlrewrite default-match-type="regex">
+	<rule>
+		<from>^/$</from>
+		<to type="redirect">/client/home</to>
+	</rule>
+	<!-- 前台界面 cliet -->
+	<rule>
+		<from>^/client$</from>
+		<to type="redirect">/client/home</to>
+	</rule>
+	<rule>
+		<from>^/client/$</from>
+		<to type="redirect">/client/home</to>
+	</rule>
+	<rule>
+		<from>^/help$</from>
+		<to type="redirect">/client/help</to>
+	</rule>
+	<rule>
+		<from>^/helpPay$</from>
+		<to type="redirect">/client/helpPay</to>
+	</rule>
+	<rule>
+		<from>^/clause$</from>
+		<to type="redirect">/client/clause</to>
+	</rule>
+	<rule>
+		<from>^/ensure$</from>
+		<to type="redirect">/client/ensure</to>
+	</rule>
+	<rule>
+		<from>^/regAgent$</from>
+		<to type="redirect">/client/regAgent</to>
+	</rule>
+	<rule>
+		<from>^/regLhub$</from>
+		<to type="redirect">/client/regLhub</to>
+	</rule>
+	<rule>
+		<from>^/dls$</from>
+		<to type="redirect">/client/dls</to>
+	</rule>
+	<rule>
+		<from>^/xxzx$</from>
+		<to type="redirect">/client/xxzx</to>
+	</rule>
+	
+	<!-- 前台界面client -->
+	<rule>
+		<from>^/client/(.*)$</from>
+		<to>/reqClient/doClient/$1</to>
+	</rule>
+	
+	<!-- 个人中心 sigle -->
+	<rule>
+		<from>^/sigle/(.*)$</from>
+		<to>/reqSigle/doSigle/$1</to>
+	</rule>
+</urlrewrite>

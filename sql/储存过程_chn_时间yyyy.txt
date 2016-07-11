@@ -1,0 +1,81 @@
+DELIMITER //
+DROP PROCEDURE IF EXISTS pro_rnk4profit;
+CREATE PROCEDURE pro_rnk4profit(in parsType int)
+BEGIN
+	DECLARE rnk varchar(64) character set utf8;
+	DECLARE chn varchar(64) character set utf8 default 'agent';
+	IF parsType = 1 then
+    	SET chn = "lhub";
+	ELSE
+    	SET chn = "agent";
+	END IF;
+	
+    SET rnk = concat("learnhall3_log.rnk4profit",DATE_FORMAT(NOW(),'%Y%m%d'),"_",chn);
+    
+    SET @tmpYYYY = DATE_FORMAT(NOW(),'%Y');
+    
+    SET @drop = concat("DROP TABLE IF EXISTS ",rnk);
+    PREPARE drop1 FROM @drop;
+    EXECUTE drop1;
+    
+    SET @crt = concat(
+    	"CREATE TABLE IF NOT EXISTS ",
+    	rnk,
+    	" (",
+    	"`id` int(11) NOT NULL AUTO_INCREMENT COMMENT '排行榜唯一标识',",
+    	"`indexs` int(11) NOT NULL COMMENT '排序名次',",
+    	"`type` int(11) NOT NULL COMMENT '0代理商,1学习中心',",
+    	"`ownerid` int(11) NOT NULL COMMENT '拥有者标识[agentid/lhubid]',",
+    	"`money` double NOT NULL COMMENT '成交金额',",
+    	"`bonus` double NOT NULL COMMENT '代理奖金/学中押金',",
+    	"`royalty` double NOT NULL COMMENT '提成',",
+    	"PRIMARY KEY (`id`),",
+    	"UNIQUE KEY `type_ownerid` (`type`,`ownerid`)"
+    	") ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;"
+    );
+	PREPARE crt1 FROM @crt;
+    EXECUTE crt1;
+	
+	SET @in2 = concat(
+	    	"INSERT INTO ",
+	    	rnk,
+	    	"(`indexs`,`type`,`ownerid`,`money`,`bonus`,`royalty`)",
+	    	"SELECT @rownum:=@rownum+1 AS `index`,tmptb.* FROM (SELECT @rownum:=0) r,"
+	);
+	
+	IF parsType = 1 then
+    	SET @in2 = concat(
+    	@in2,
+    	" (SELECT 1 as `type`,`lhubid` as `ownerid`,SUM(`realprice`) as `money`,SUM(`lhubDeposit`) as `bonus`,SUM(`lhubRoyalty`) as `royalty` FROM `orders4profit` `tmp` WHERE `tmp`.`isProfit4Lhub` = true AND `tmp`.`orderNo` IN(SELECT `orderNo` FROM `orders` WHERE `orders`.`type` = 0 AND `orders`.`statusProcess` > 0 AND `orders`.`lasttime` BETWEEN '",@tmpYYYY,"-01-01' AND '",@tmpYYYY,"-12-31 23:59:59') GROUP BY `tmp`.`lhubid` ORDER BY `money` DESC,`tmp`.`lhubid` ASC) tmptb;"
+    	);
+	ELSE
+    	SET @in2 = concat(
+    	@in2,
+    	" (SELECT 0 as `type`,`agentid` as `ownerid`,SUM(`realprice`) as `money`,SUM(`agentBonus`) as `bonus`,SUM(`agentRoyalty`) as `royalty` FROM `orders4profit` `tmp` WHERE `tmp`.`isProfit4Agent` = true AND `tmp`.`orderNo` IN(SELECT `orderNo` FROM `orders` WHERE `orders`.`type` = 0 AND `orders`.`statusProcess` > 0 AND `orders`.`lasttime` BETWEEN '",@tmpYYYY,"-01-01' AND '",@tmpYYYY,"-12-31 23:59:59') GROUP BY `tmp`.`agentid` ORDER BY `money` DESC,`tmp`.`agentid` ASC) tmptb;"
+    	);
+	END IF;
+	
+	PREPARE in2 FROM @in2;
+	EXECUTE in2;
+END //
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS pro_rnkProfit4Del;
+CREATE PROCEDURE pro_rnkProfit4Del()
+BEGIN
+	DECLARE b int default 0;
+	DECLARE deltb varchar(100) character set utf8 default '';
+    DECLARE cur CURSOR FOR SELECT CONCAT('DROP TABLE IF EXISTS ', table_name, ';' ) AS dtbname FROM information_schema.tables WHERE (table_name LIKE 'rnk4profit%') AND (table_name NOT LIKE CONCAT("%",DATE_FORMAT(NOW(),'%Y%m%d'),"%") AND table_name NOT LIKE CONCAT("%",DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 1 DAY),'%Y%m%d'),"%") AND table_name NOT LIKE CONCAT("%",DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 2 DAY),'%Y%m%d'),"%") AND table_name NOT LIKE CONCAT("%",DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 3 DAY),'%Y%m%d'),"%"));
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET b = 1;
+    OPEN cur;
+	FETCH cur INTO deltb;
+	WHILE b <> 1 DO
+    	SET @sql1 = concat("",deltb);
+    	PREPARE sql1 FROM @sql1;
+    	EXECUTE sql1;
+    	DEALLOCATE PREPARE sql1;
+    	SET b = 0;
+    	FETCH cur INTO deltb;
+	END WHILE;
+	CLOSE cur;
+END //
