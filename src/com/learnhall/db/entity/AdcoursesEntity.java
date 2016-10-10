@@ -87,7 +87,7 @@ public class AdcoursesEntity extends AdcoursesInternal {
 		if (departid > 0) {
 			pStr.a(" AND departid = ", departid);
 		}
-		pStr.a(" GROUP BY nmMajor ");
+		pStr.a(" GROUP BY nmMajor,imgurl4major,createtime ");
 		pStr.a(" ORDER BY createtime DESC ");
 		List<Map> result = new ArrayList<Map>();
 		try {
@@ -113,7 +113,7 @@ public class AdcoursesEntity extends AdcoursesInternal {
 			pStr.a(" AND nmMajor like '%", nmMajor, "%'");
 		}
 
-		pStr.a(" GROUP BY nmMajor ");
+		pStr.a(" GROUP BY nmMajor,imgurl4major ");
 		pStr.a(" ORDER BY createtime DESC ");
 		List<Map> result = new ArrayList<Map>();
 		try {
