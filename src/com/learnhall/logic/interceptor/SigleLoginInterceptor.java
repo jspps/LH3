@@ -17,6 +17,8 @@ import com.learnhall.logic.SessionKeys;
 @Repository
 public class SigleLoginInterceptor extends HandlerInterceptorAdapter {
 
+	static boolean isDebuging = false;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
@@ -62,7 +64,7 @@ public class SigleLoginInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 
-		debugLog(false, request);
+		debugLog(isDebuging, request);
 		return super.preHandle(request, response, handler);
 	}
 
