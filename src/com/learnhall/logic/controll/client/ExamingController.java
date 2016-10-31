@@ -255,8 +255,20 @@ public class ExamingController {
 				allScore += ecatalog.getEveryScore();
 				mapLeft.put("serial", ecatalog.getSerial());
 				mapLeft.put("bigtypes", ecatalog.getBigtypes());
-				mapLeft.put("titleEllipsis",
-						StrEx.ellipsis(ecatalog.getTitle(), 10));
+				
+				String elps = StrEx.ellipsis(ecatalog.getTitle(), 10);
+				int index = elps.indexOf("<img");
+				if(index != -1){
+					elps = elps.substring(0, index);
+					elps += "...";
+				}
+				
+				index = elps.indexOf("<p");
+				if(index != -1){
+					elps = elps.substring(0, index);
+					elps += "...";
+				}
+				mapLeft.put("titleEllipsis",elps);
 			}
 
 			listLeft.add(mapLeft);

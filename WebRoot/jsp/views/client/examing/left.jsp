@@ -13,7 +13,7 @@
 <c:set var="fill4left" value="-1"></c:set>
 <c:set var="jianda4left" value="-1"></c:set>
 <c:set var="lunsu4left" value="-1"></c:set>
-<c:set var="anli4left" value="-1"></c:set>
+<c:set var="anlifx4left" value="-1"></c:set>
 <c:set var="isShowTit" value="true"></c:set>
 
 <!--  <div style="width: 180px;margin-left: 18px;"> -->
@@ -48,9 +48,9 @@
 				<c:set var="lunsu4left" value="${ent.examcatalogid}"></c:set>
 				<c:set var="isShowTit" value="true"></c:set>
 			</c:when>
-			<c:when test="${ent.type==7 && anli4left != ent.examcatalogid}}">
-				<c:set var="anli4left" value="${ent.examcatalogid}"></c:set>
-				<c:set var="isShowTit" value="true"></c:set>
+			<c:when test="${ent.type==7 && anlifx4left != ent.examcatalogid}">
+				<c:set var="anlifx4left" value="${ent.examcatalogid}"></c:set>
+				<c:set var="isShowTit" value="true"></c:set>				
 			</c:when>
 			<c:otherwise></c:otherwise>
 			</c:choose>
