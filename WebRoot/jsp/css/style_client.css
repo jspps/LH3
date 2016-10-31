@@ -2997,7 +2997,7 @@ div#tymk_cont_top > img {
 	margin-top:25px;
 }
 .tymk_cont_style{
-	width:1000px;
+	width:1050px;
 	margin:0 auto;
 	margin-top:20px;
 }
@@ -3049,7 +3049,7 @@ div#tymk_cont_top > img {
 }
 
 .tymk_right_cont{
-	width:780px;
+	width:790px;
 	position:absolute;
 	height:370px;
 	background:url(../imgs/client/163.jpg) left repeat-y;
@@ -3057,6 +3057,9 @@ div#tymk_cont_top > img {
 	border-left:0px;
 	margin-left:218px;
 	margin-top:114px;
+	overflow:hidden;
+	overflow-y:scroll;
+	overflow-x:hidden;
 }
 .tymk_right_ajjxcont{
 	width:780px;
