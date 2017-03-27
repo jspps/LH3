@@ -1,0 +1,22 @@
+安装要默认到c盘里面
+
+上传过大的文件配置:
+
+phpmyadmin操作数据库大文件的时候更是郁闷，设置过不下N遍了，每回都是抓着脑袋想哪些设置要更改，
+记录一下吧，省得以后费脑。
+
+php.ini相关设置(找到如下设置修改，没有的则添加,一般在php文件下面，即为php\php.ini)
+
+max_execution_time = 0 
+max_input_time = 0 
+memory_limit = 128M (或者更大) 
+post_max_size = 128M (或者更大) 
+upload_max_filesize = 128M (或者更大)
+
+phpMyAdmin相关设置(config.default.php，新版应该在libriaies目录下，即为:phpMyAdmin\libraries\config.default.php)
+
+$cfg['ExecTimeLimit'] =  0; 
+$cfg['MemoryLimit'] =  0; 
+$cfg['LoginCookieValidity'] = 144000; (默认是1440，这个解决登录不久session失效问题) 
+$cfg['UploadDir'] =’./upload’; 在phpmyadmin目录下建立对应目录，这样可以用其它方式先把文件上传到服务器，导入时会有一个选择服务器本地文件的选项，自然导入也会快一些，但是注意导入文件以.sql、.zip等可认的文件格式。 
+$cfg['SaveDir'] =’./save’;
