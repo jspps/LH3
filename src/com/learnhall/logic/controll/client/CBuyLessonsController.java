@@ -19,6 +19,7 @@ import com.learnhall.content.Svc;
 import com.learnhall.db.bean.Adcourses;
 import com.learnhall.db.bean.Appraise;
 import com.learnhall.db.bean.Kind;
+import com.learnhall.db.bean.Learnhub;
 import com.learnhall.db.bean.Orders;
 import com.learnhall.db.bean.Product;
 import com.learnhall.db.entity.AppraiseEntity;
@@ -150,7 +151,15 @@ public class CBuyLessonsController {
 		modelMap.addAttribute("lens4Appraise", lens4Appraise);
 
 		// 学习中心信息
-		modelMap.addAttribute("nmLhub", kind.getNmLhub());
+		String logo = "";
+		Learnhub lb = kind.getLearnhubFkLhubid();
+		if(lb != null){
+			logo = lb.getImg4logo();
+		}
+//		if(StrEx.isEmpty(logo)){
+//			logo = "jsp/imgs/client/63.jpg";
+//		}
+		modelMap.addAttribute("lhlogo", logo);
 		modelMap.addAttribute("lhubid", kind.getLhubid());
 		return "client/kind/kindBuy";
 	}

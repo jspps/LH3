@@ -32,9 +32,9 @@ public class LearnhubDAO extends JdbcTemplate {
         return TABLE + DateEx.nowStr5();
     }
 
-    public static String[] carrays ={"lhid", "accountid", "name", "type", "codeid", "province", "city", "seat", "qq", "uname", "salesmode", "img4jg", "volume", "moneyAll", "moneyCur", "isselfadmin", "status", "tiku", "quality", "wrong", "examineStatus", "examineDes", "createtime", "imgr4Cover", "descr", "alipay", "isVerifyAlipay", "img4idface", "img4idback"};
-    public static String coulmns = "lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback";
-    public static String coulmns2 = "accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback";
+    public static String[] carrays ={"lhid", "accountid", "name", "type", "codeid", "province", "city", "seat", "qq", "uname", "salesmode", "img4jg", "volume", "moneyAll", "moneyCur", "isselfadmin", "status", "tiku", "quality", "wrong", "examineStatus", "examineDes", "createtime", "imgr4Cover", "descr", "alipay", "isVerifyAlipay", "img4idface", "img4idback", "img4logo"};
+    public static String coulmns = "lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo";
+    public static String coulmns2 = "accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo";
 
     public LearnhubDAO(Connection conn) {
         super(conn);
@@ -56,7 +56,7 @@ public class LearnhubDAO extends JdbcTemplate {
         StringBuffer sql = StringBufPool.borrowObject();
         try {
             learnhub.reset();
-            sql.append("INSERT INTO ").append(TABLENAME2).append(" (accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback) VALUES (:accountid, :name, :type, :codeid, :province, :city, :seat, :qq, :uname, :salesmode, :img4jg, :volume, :moneyAll, :moneyCur, :isselfadmin, :status, :tiku, :quality, :wrong, :examineStatus, :examineDes, :createtime, :imgr4Cover, :descr, :alipay, :isVerifyAlipay, :img4idface, :img4idback)");
+            sql.append("INSERT INTO ").append(TABLENAME2).append(" (accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo) VALUES (:accountid, :name, :type, :codeid, :province, :city, :seat, :qq, :uname, :salesmode, :img4jg, :volume, :moneyAll, :moneyCur, :isselfadmin, :status, :tiku, :quality, :wrong, :examineStatus, :examineDes, :createtime, :imgr4Cover, :descr, :alipay, :isVerifyAlipay, :img4idface, :img4idback, :img4logo)");
             Map map = super.insert(sql.toString(), learnhub);
             return getInt(map, "GENERATED_KEY");
         } catch(Exception e) {
@@ -127,7 +127,7 @@ public class LearnhubDAO extends JdbcTemplate {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
             learnhub.ustr();
-            sql.append("INSERT INTO ").append(TABLENAME2).append(" (lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback) VALUES (:lhid, :accountid, :name, :type, :codeid, :province, :city, :seat, :qq, :uname, :salesmode, :img4jg, :volume, :moneyAll, :moneyCur, :isselfadmin, :status, :tiku, :quality, :wrong, :examineStatus, :examineDes, :createtime, :imgr4Cover, :descr, :alipay, :isVerifyAlipay, :img4idface, :img4idback)");
+            sql.append("INSERT INTO ").append(TABLENAME2).append(" (lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo) VALUES (:lhid, :accountid, :name, :type, :codeid, :province, :city, :seat, :qq, :uname, :salesmode, :img4jg, :volume, :moneyAll, :moneyCur, :isselfadmin, :status, :tiku, :quality, :wrong, :examineStatus, :examineDes, :createtime, :imgr4Cover, :descr, :alipay, :isVerifyAlipay, :img4idface, :img4idback, :img4logo)");
             Map map = super.insert(sql.toString(), learnhub);
             return getInt(map, "GENERATED_KEY");
         } catch(Exception e) {
@@ -146,7 +146,7 @@ public class LearnhubDAO extends JdbcTemplate {
         StringBuffer sql = StringBufPool.borrowObject();
         try {
             if(learnhubs == null || learnhubs.isEmpty()) return new int[0];
-            sql.append("INSERT INTO ").append(TABLENAME2).append(" (accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback) VALUES (:accountid, :name, :type, :codeid, :province, :city, :seat, :qq, :uname, :salesmode, :img4jg, :volume, :moneyAll, :moneyCur, :isselfadmin, :status, :tiku, :quality, :wrong, :examineStatus, :examineDes, :createtime, :imgr4Cover, :descr, :alipay, :isVerifyAlipay, :img4idface, :img4idback)");
+            sql.append("INSERT INTO ").append(TABLENAME2).append(" (accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo) VALUES (:accountid, :name, :type, :codeid, :province, :city, :seat, :qq, :uname, :salesmode, :img4jg, :volume, :moneyAll, :moneyCur, :isselfadmin, :status, :tiku, :quality, :wrong, :examineStatus, :examineDes, :createtime, :imgr4Cover, :descr, :alipay, :isVerifyAlipay, :img4idface, :img4idback, :img4logo)");
             return super.batchInsert(sql.toString(), learnhubs);
          } catch (Exception e) {
              log.info(e2s(e));
@@ -289,7 +289,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public List<Learnhub> selectAll(final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" ORDER BY lhid");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" ORDER BY lhid");
             return super.queryForList(sql.toString(), Learnhub.class);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -354,7 +354,7 @@ public class LearnhubDAO extends JdbcTemplate {
                     sb.append(", ");
             }
             String str = sb.toString();
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" WHERE lhid in (").append(str).append(" ) ORDER BY lhid");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" WHERE lhid in (").append(str).append(" ) ORDER BY lhid");
             return super.queryForList(sql.toString(), Learnhub.class);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -381,7 +381,7 @@ public class LearnhubDAO extends JdbcTemplate {
                     sb.append(", ");
             }
             String str = sb.toString();
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" WHERE lhid in ( :str ) ORDER BY lhid");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" WHERE lhid in ( :str ) ORDER BY lhid");
             Map params = newMap();
             params.put("str", str);
             return super.queryForList(sql.toString(), params, Learnhub.class);
@@ -433,7 +433,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public List<Learnhub> selectLast(final int num, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" ORDER BY lhid DESC LIMIT ").append(num).append("");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" ORDER BY lhid DESC LIMIT ").append(num).append("");
             return super.queryForList(sql.toString(), Learnhub.class);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -472,7 +472,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public Learnhub last(final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" ORDER BY lhid DESC LIMIT 1");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" ORDER BY lhid DESC LIMIT 1");
             return super.queryForObject(sql.toString(), Learnhub.class);
         } catch(Exception e) {
             // log.info(e2s(e));
@@ -489,7 +489,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public List<Learnhub> selectGtKeyNum(final int lhid, final int _num, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" WHERE lhid > :lhid ORDER BY lhid LIMIT ").append(_num).append("");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" WHERE lhid > :lhid ORDER BY lhid LIMIT ").append(_num).append("");
             Map params = newMap();
             params.put("lhid", lhid);
             return super.queryForList(sql.toString(), params, Learnhub.class);
@@ -508,7 +508,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public List<Learnhub> selectGtKey(final int lhid, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" WHERE lhid > :lhid ORDER BY lhid");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" WHERE lhid > :lhid ORDER BY lhid");
             Map params = newMap();
             params.put("lhid", lhid);
             return super.queryForList(sql.toString(), params, Learnhub.class);
@@ -551,7 +551,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public Learnhub selectByKey(final int lhid, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" WHERE lhid = :lhid");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" WHERE lhid = :lhid");
             Map params = newMap();
             params.put("lhid", lhid);
             return super.queryForObject(sql.toString(), params, Learnhub.class);
@@ -587,7 +587,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public Learnhub selectByLhid(final Integer lhid, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" WHERE lhid = :lhid");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" WHERE lhid = :lhid");
             Map params = newMap();
             params.put("lhid", lhid);
             return super.queryForObject(sql.toString(), params, Learnhub.class);
@@ -606,7 +606,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public Learnhub selectByCodeid(final String codeid, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" WHERE codeid = :codeid");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" WHERE codeid = :codeid");
             Map params = newMap();
             params.put("codeid", codeid);
             return super.queryForObject(sql.toString(), params, Learnhub.class);
@@ -642,7 +642,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public List<Learnhub> selectLikeCodeid(final String codeid, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" WHERE codeid LIKE '%").append(codeid).append("%' ORDER BY lhid ");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" WHERE codeid LIKE '%").append(codeid).append("%' ORDER BY lhid ");
             return super.queryForList(sql.toString(), Learnhub.class);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -682,7 +682,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public Learnhub selectByAccountid(final Integer accountid, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" WHERE accountid = :accountid");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" WHERE accountid = :accountid");
             Map params = newMap();
             params.put("accountid", accountid);
             return super.queryForObject(sql.toString(), params, Learnhub.class);
@@ -718,7 +718,7 @@ public class LearnhubDAO extends JdbcTemplate {
     public List<Learnhub> selectByPage(final int begin, final int num, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback FROM ").append(TABLENAME2).append(" ORDER BY lhid LIMIT ").append(begin).append(", ").append(num).append("");
+            sql.append("SELECT lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo FROM ").append(TABLENAME2).append(" ORDER BY lhid LIMIT ").append(begin).append(", ").append(num).append("");
             return super.queryForList(sql.toString(), Learnhub.class);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -2419,7 +2419,7 @@ public class LearnhubDAO extends JdbcTemplate {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
             if(learnhubs == null || learnhubs.isEmpty()) return new int[0];
-            sql.append("UPDATE ").append(TABLENAME2).append(" SET accountid=:accountid, name=:name, type=:type, codeid=:codeid, province=:province, city=:city, seat=:seat, qq=:qq, uname=:uname, salesmode=:salesmode, img4jg=:img4jg, volume=:volume, moneyAll=:moneyAll, moneyCur=:moneyCur, isselfadmin=:isselfadmin, status=:status, tiku=:tiku, quality=:quality, wrong=:wrong, examineStatus=:examineStatus, examineDes=:examineDes, createtime=:createtime, imgr4Cover=:imgr4Cover, descr=:descr, alipay=:alipay, isVerifyAlipay=:isVerifyAlipay, img4idface=:img4idface, img4idback=:img4idback WHERE lhid=:lhid");
+            sql.append("UPDATE ").append(TABLENAME2).append(" SET accountid=:accountid, name=:name, type=:type, codeid=:codeid, province=:province, city=:city, seat=:seat, qq=:qq, uname=:uname, salesmode=:salesmode, img4jg=:img4jg, volume=:volume, moneyAll=:moneyAll, moneyCur=:moneyCur, isselfadmin=:isselfadmin, status=:status, tiku=:tiku, quality=:quality, wrong=:wrong, examineStatus=:examineStatus, examineDes=:examineDes, createtime=:createtime, imgr4Cover=:imgr4Cover, descr=:descr, alipay=:alipay, isVerifyAlipay=:isVerifyAlipay, img4idface=:img4idface, img4idback=:img4idback, img4logo=:img4logo WHERE lhid=:lhid");
             return super.batchUpdate2(sql.toString(), learnhubs);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -2461,6 +2461,7 @@ public class LearnhubDAO extends JdbcTemplate {
                 "	`isVerifyAlipay`  BIT(1) NOT NULL," +
                 "	`img4idface`  TINYTEXT NOT NULL," +
                 "	`img4idback`  TINYTEXT NOT NULL," +
+                "	`img4logo`  TINYTEXT NOT NULL," +
                 "	PRIMARY KEY (`lhid`)," +
                 "	UNIQUE KEY `codeid` (`codeid`)," +
                 "	UNIQUE KEY `accountid` (`accountid`)" +
@@ -2507,6 +2508,7 @@ public class LearnhubDAO extends JdbcTemplate {
                 "	`isVerifyAlipay`  BIT(1) NOT NULL," +
                 "	`img4idface`  TINYTEXT NOT NULL," +
                 "	`img4idback`  TINYTEXT NOT NULL," +
+                "	`img4logo`  TINYTEXT NOT NULL," +
                 "	PRIMARY KEY (`lhid`)," +
                 "	KEY `codeid` (`codeid`)," +
                 "	KEY `accountid` (`accountid`)" +

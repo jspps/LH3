@@ -173,7 +173,7 @@ public class AccountController {
 				codeid, province, city, seat, qqemail, uname, salesmode,
 				img4jg, volume, money, money, isselfadmin, status, tiku,
 				quality, wrong, examineStatus, examineDes, createtime, "",
-				"请填写描述信息!", alipay, false, img4idface, img4idback);
+				"请填写描述信息!", alipay, false, img4idface, img4idback,"");
 		// 创建学习中心
 		learnhub = learnhub.insert();
 		if (learnhub == null || learnhub.getLhid() == 0) {

@@ -40,10 +40,9 @@
 			</div>
 			<div onclick="go2Lhub();">
 				<div class="xxzx_qbkc_logo">
-					<div style="text-align: center;font-size: 14px;margin: 20px;">
+					<div>
 						<a href="javascript:void(0);">
-							<!-- <img src="jsp/imgs/client/63.jpg" />  -->
-							${nmLhub}
+							<img src="${lhlogo}" width="136" height="84" />
 						</a>
 					</div>
 				</div>

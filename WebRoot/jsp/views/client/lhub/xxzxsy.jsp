@@ -39,9 +39,9 @@
 				<a href="javascript:void(0);">${lhub.name }首页</a>
 			</div>
 			<div class="xxzx_qbkc_logo">
-				<div style="text-align: center;font-size: 14px;margin: 20px;">
+				<div>
 					<a href="javascript:void(0);">
-						${lhub.name }
+						<img src="${lhub.imgr4Cover}" width="136" height="84" />
 					</a>
 				</div>
 			</div>

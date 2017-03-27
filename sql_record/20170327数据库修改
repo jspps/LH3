@@ -1,0 +1,1 @@
+ALTER TABLE `learnhub` ADD `img4logo` VARCHAR(256) NOT NULL DEFAULT '' COMMENT 'logo标识' ;

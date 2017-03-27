@@ -22,10 +22,10 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
 
     public static final String primary = "lhid";
 
-    public static final class Col { public static final String lhid = "lhid"; public static final String accountid = "accountid"; public static final String name = "name"; public static final String type = "type"; public static final String codeid = "codeid"; public static final String province = "province"; public static final String city = "city"; public static final String seat = "seat"; public static final String qq = "qq"; public static final String uname = "uname"; public static final String salesmode = "salesmode"; public static final String img4jg = "img4jg"; public static final String volume = "volume"; public static final String moneyAll = "moneyAll"; public static final String moneyCur = "moneyCur"; public static final String isselfadmin = "isselfadmin"; public static final String status = "status"; public static final String tiku = "tiku"; public static final String quality = "quality"; public static final String wrong = "wrong"; public static final String examineStatus = "examineStatus"; public static final String examineDes = "examineDes"; public static final String createtime = "createtime"; public static final String imgr4Cover = "imgr4Cover"; public static final String descr = "descr"; public static final String alipay = "alipay"; public static final String isVerifyAlipay = "isVerifyAlipay"; public static final String img4idface = "img4idface"; public static final String img4idback = "img4idback";  }
-    public static final class CEn { public static final String lhid = "lhid"; public static final String accountid = "accountid"; public static final String name = "name"; public static final String type = "type"; public static final String codeid = "codeid"; public static final String province = "province"; public static final String city = "city"; public static final String seat = "seat"; public static final String qq = "qq"; public static final String uname = "uname"; public static final String salesmode = "salesmode"; public static final String img4jg = "img4jg"; public static final String volume = "volume"; public static final String moneyAll = "moneyAll"; public static final String moneyCur = "moneyCur"; public static final String isselfadmin = "isselfadmin"; public static final String status = "status"; public static final String tiku = "tiku"; public static final String quality = "quality"; public static final String wrong = "wrong"; public static final String examineStatus = "examineStatus"; public static final String examineDes = "examineDes"; public static final String createtime = "createtime"; public static final String imgr4Cover = "imgr4Cover"; public static final String descr = "descr"; public static final String alipay = "alipay"; public static final String isVerifyAlipay = "isVerifyAlipay"; public static final String img4idface = "img4idface"; public static final String img4idback = "img4idback";  }
-    public static final String[] carrays ={"lhid", "accountid", "name", "type", "codeid", "province", "city", "seat", "qq", "uname", "salesmode", "img4jg", "volume", "moneyAll", "moneyCur", "isselfadmin", "status", "tiku", "quality", "wrong", "examineStatus", "examineDes", "createtime", "imgr4Cover", "descr", "alipay", "isVerifyAlipay", "img4idface", "img4idback"};
-    public static final String[] dbTypes ={"INT", "INT", "VARCHAR", "INT", "VARCHAR", "VARCHAR", "VARCHAR", "TINYTEXT", "VARCHAR", "VARCHAR", "INT", "TINYTEXT", "INT", "DOUBLE", "DOUBLE", "BIT", "INT", "INT", "INT", "INT", "INT", "TEXT", "DATETIME", "TINYTEXT", "TEXT", "TINYTEXT", "BIT", "TINYTEXT", "TINYTEXT"};
+    public static final class Col { public static final String lhid = "lhid"; public static final String accountid = "accountid"; public static final String name = "name"; public static final String type = "type"; public static final String codeid = "codeid"; public static final String province = "province"; public static final String city = "city"; public static final String seat = "seat"; public static final String qq = "qq"; public static final String uname = "uname"; public static final String salesmode = "salesmode"; public static final String img4jg = "img4jg"; public static final String volume = "volume"; public static final String moneyAll = "moneyAll"; public static final String moneyCur = "moneyCur"; public static final String isselfadmin = "isselfadmin"; public static final String status = "status"; public static final String tiku = "tiku"; public static final String quality = "quality"; public static final String wrong = "wrong"; public static final String examineStatus = "examineStatus"; public static final String examineDes = "examineDes"; public static final String createtime = "createtime"; public static final String imgr4Cover = "imgr4Cover"; public static final String descr = "descr"; public static final String alipay = "alipay"; public static final String isVerifyAlipay = "isVerifyAlipay"; public static final String img4idface = "img4idface"; public static final String img4idback = "img4idback"; public static final String img4logo = "img4logo";  }
+    public static final class CEn { public static final String lhid = "lhid"; public static final String accountid = "accountid"; public static final String name = "name"; public static final String type = "type"; public static final String codeid = "codeid"; public static final String province = "province"; public static final String city = "city"; public static final String seat = "seat"; public static final String qq = "qq"; public static final String uname = "uname"; public static final String salesmode = "salesmode"; public static final String img4jg = "img4jg"; public static final String volume = "volume"; public static final String moneyAll = "moneyAll"; public static final String moneyCur = "moneyCur"; public static final String isselfadmin = "isselfadmin"; public static final String status = "status"; public static final String tiku = "tiku"; public static final String quality = "quality"; public static final String wrong = "wrong"; public static final String examineStatus = "examineStatus"; public static final String examineDes = "examineDes"; public static final String createtime = "createtime"; public static final String imgr4Cover = "imgr4Cover"; public static final String descr = "descr"; public static final String alipay = "alipay"; public static final String isVerifyAlipay = "isVerifyAlipay"; public static final String img4idface = "img4idface"; public static final String img4idback = "img4idback"; public static final String img4logo = "img4logo";  }
+    public static final String[] carrays ={"lhid", "accountid", "name", "type", "codeid", "province", "city", "seat", "qq", "uname", "salesmode", "img4jg", "volume", "moneyAll", "moneyCur", "isselfadmin", "status", "tiku", "quality", "wrong", "examineStatus", "examineDes", "createtime", "imgr4Cover", "descr", "alipay", "isVerifyAlipay", "img4idface", "img4idback", "img4logo"};
+    public static final String[] dbTypes ={"INT", "INT", "VARCHAR", "INT", "VARCHAR", "VARCHAR", "VARCHAR", "TINYTEXT", "VARCHAR", "VARCHAR", "INT", "TINYTEXT", "INT", "DOUBLE", "DOUBLE", "BIT", "INT", "INT", "INT", "INT", "INT", "TEXT", "DATETIME", "TINYTEXT", "TEXT", "TINYTEXT", "BIT", "TINYTEXT", "TINYTEXT", "TINYTEXT"};
 
 
     public int lhid;
@@ -57,6 +57,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
     public boolean isVerifyAlipay;
     public String img4idface;
     public String img4idback;
+    public String img4logo;
 
     @Override
     public String _tableId() {
@@ -609,6 +610,17 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         return this;
     }
 
+    public String getImg4logo(){
+        return img4logo;
+    }
+
+    public Learnhub setImg4logo(String img4logo){
+        String _old = this.img4logo;
+        this.img4logo = img4logo;
+        changeIt(Col.img4logo, _old, img4logo);
+        return this;
+    }
+
     public int compareTo(Learnhub v2, String fieldZh) {
         Object o1 = this.value(fieldZh);
         Object o2 = v2.value(fieldZh);
@@ -621,7 +633,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         return compareTo(o1, o2);
     }
 
-    public static Learnhub newLearnhub(Integer lhid, Integer accountid, String name, Integer type, String codeid, String province, String city, String seat, String qq, String uname, Integer salesmode, String img4jg, Integer volume, Double moneyAll, Double moneyCur, Boolean isselfadmin, Integer status, Integer tiku, Integer quality, Integer wrong, Integer examineStatus, String examineDes, java.util.Date createtime, String imgr4Cover, String descr, String alipay, Boolean isVerifyAlipay, String img4idface, String img4idback) {
+    public static Learnhub newLearnhub(Integer lhid, Integer accountid, String name, Integer type, String codeid, String province, String city, String seat, String qq, String uname, Integer salesmode, String img4jg, Integer volume, Double moneyAll, Double moneyCur, Boolean isselfadmin, Integer status, Integer tiku, Integer quality, Integer wrong, Integer examineStatus, String examineDes, java.util.Date createtime, String imgr4Cover, String descr, String alipay, Boolean isVerifyAlipay, String img4idface, String img4idback, String img4logo) {
         Learnhub result = new Learnhub();
         result.lhid = lhid;
         result.accountid = accountid;
@@ -652,6 +664,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         result.isVerifyAlipay = isVerifyAlipay;
         result.img4idface = img4idface;
         result.img4idback = img4idback;
+        result.img4logo = img4logo;
         return result;
     }
 
@@ -686,6 +699,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         result.isVerifyAlipay = learnhub.isVerifyAlipay;
         result.img4idface = learnhub.img4idface;
         result.img4idback = learnhub.img4idback;
+        result.img4logo = learnhub.img4logo;
         return result;
     }
 
@@ -728,7 +742,8 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
             boolean isVerifyAlipay = true; 	// isVerifyAlipay
             String img4idface = ""; 	// img4idface
             String img4idback = ""; 	// img4idback
-            learnhub = Learnhub.newLearnhub(lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback);
+            String img4logo = ""; 	// img4logo
+            learnhub = Learnhub.newLearnhub(lhid, accountid, name, type, codeid, province, city, seat, qq, uname, salesmode, img4jg, volume, moneyAll, moneyCur, isselfadmin, status, tiku, quality, wrong, examineStatus, examineDes, createtime, imgr4Cover, descr, alipay, isVerifyAlipay, img4idface, img4idback, img4logo);
         }
         learnhub = learnhub.insert();
 
@@ -761,6 +776,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         boolean isVerifyAlipay = learnhub.getIsVerifyAlipay(); 	// isVerifyAlipay
         String img4idface = learnhub.getImg4idface(); 	// img4idface
         String img4idback = learnhub.getImg4idback(); 	// img4idback
+        String img4logo = learnhub.getImg4logo(); 	// img4logo
     }
     */
 
@@ -959,6 +975,8 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
             return img4idface;
         case CEn.img4idback: 
             return img4idback;
+        case CEn.img4logo: 
+            return img4logo;
         }
         return "";
     }
@@ -1037,6 +1055,8 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
             return img4idface;
         case CEn.img4idback:
             return img4idback;
+        case CEn.img4logo:
+            return img4logo;
         }
         return null;
     }
@@ -1086,6 +1106,8 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
             return setImg4idface(value2);
         case CEn.img4idback:
             return setImg4idback(value2);
+        case CEn.img4logo:
+            return setImg4logo(value2);
         }
         // throw new IOException("fieldEn:" + fieldEn + " Not Found.");
         return this;
@@ -1139,6 +1161,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         result.put("isVerifyAlipay", isVerifyAlipay);
         result.put("img4idface", img4idface);
         result.put("img4idback", img4idback);
+        result.put("img4logo", img4logo);
         return result;
     }
 
@@ -1173,6 +1196,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         result.put("isVerifyAlipay", isVerifyAlipay);
         result.put("img4idface", img4idface);
         result.put("img4idback", img4idback);
+        result.put("img4logo", img4logo);
         return result;
     }
 
@@ -1209,6 +1233,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         result.put("isVerifyAlipay", isVerifyAlipay);
         result.put("img4idface", img4idface);
         result.put("img4idback", img4idback);
+        result.put("img4logo", img4logo);
         return result;
     }
 
@@ -1242,6 +1267,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         Boolean isVerifyAlipay = MapEx.getBoolean(e, "isVerifyAlipay");
         String img4idface = MapEx.getString(e, "img4idface");
         String img4idback = MapEx.getString(e, "img4idback");
+        String img4logo = MapEx.getString(e, "img4logo");
 
         if(lhid == null) lhid = 0;
         if(accountid == null) accountid = 0;
@@ -1272,6 +1298,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         if(isVerifyAlipay == null) isVerifyAlipay = false;
         if(img4idface == null) img4idface = "";
         if(img4idback == null) img4idback = "";
+        if(img4logo == null) img4logo = "";
 
         setLhid(lhid);
         setAccountid(accountid);
@@ -1302,6 +1329,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         setIsVerifyAlipay(isVerifyAlipay);
         setImg4idface(img4idface);
         setImg4idback(img4idback);
+        setImg4logo(img4logo);
 
         return this;
     }
@@ -1338,6 +1366,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         Boolean isVerifyAlipay = MapEx.getBoolean(e, "isVerifyAlipay");
         String img4idface = MapEx.getString(e, "img4idface");
         String img4idback = MapEx.getString(e, "img4idback");
+        String img4logo = MapEx.getString(e, "img4logo");
 
         if(lhid == null) lhid = 0;
         if(accountid == null) accountid = 0;
@@ -1368,6 +1397,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         if(isVerifyAlipay == null) isVerifyAlipay = false;
         if(img4idface == null) img4idface = "";
         if(img4idback == null) img4idback = "";
+        if(img4logo == null) img4logo = "";
 
         result.lhid = lhid;
         result.accountid = accountid;
@@ -1398,6 +1428,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         result.isVerifyAlipay = isVerifyAlipay;
         result.img4idface = img4idface;
         result.img4idback = img4idback;
+        result.img4logo = img4logo;
 
         return result;
     }
@@ -1434,6 +1465,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         Boolean isVerifyAlipay = MapEx.getBoolean(e, "isVerifyAlipay");
         String img4idface = MapEx.getString(e, "img4idface");
         String img4idback = MapEx.getString(e, "img4idback");
+        String img4logo = MapEx.getString(e, "img4logo");
 
         if(lhid == null) lhid = 0;
         if(accountid == null) accountid = 0;
@@ -1464,6 +1496,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         if(isVerifyAlipay == null) isVerifyAlipay = false;
         if(img4idface == null) img4idface = "";
         if(img4idback == null) img4idback = "";
+        if(img4logo == null) img4logo = "";
 
         result.lhid = lhid;
         result.accountid = accountid;
@@ -1494,6 +1527,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
         result.isVerifyAlipay = isVerifyAlipay;
         result.img4idface = img4idface;
         result.img4idback = img4idback;
+        result.img4logo = img4logo;
 
         return result;
     }
@@ -1513,7 +1547,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
 
     public byte[] toBytes() throws Exception {
         try (ByteOutStream out = getStream();) {
-            writeMapTag(out, 29);
+            writeMapTag(out, 30);
             writeMapEntry(out, "lhid", lhid);
             writeMapEntry(out, "accountid", accountid);
             writeMapEntry(out, "name", name);
@@ -1543,6 +1577,7 @@ public class Learnhub extends com.bowlong.sql.mysql.BeanSupport {
             writeMapEntry(out, "isVerifyAlipay", isVerifyAlipay);
             writeMapEntry(out, "img4idface", img4idface);
             writeMapEntry(out, "img4idback", img4idback);
+            writeMapEntry(out, "img4logo", img4logo);
             return out.toByteArray();
         } catch (Exception e) {
             throw e;
