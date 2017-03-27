@@ -20,3 +20,17 @@ $cfg['MemoryLimit'] =  0;
 $cfg['LoginCookieValidity'] = 144000; (默认是1440，这个解决登录不久session失效问题) 
 $cfg['UploadDir'] =’./upload’; 在phpmyadmin目录下建立对应目录，这样可以用其它方式先把文件上传到服务器，导入时会有一个选择服务器本地文件的选项，自然导入也会快一些，但是注意导入文件以.sql、.zip等可认的文件格式。 
 $cfg['SaveDir'] =’./save’;
+
+
+设置mysql 密码为12345670
+
+cmd 里面进入mysql\bin文件夹：c\xampp\mysql\bin
+cmd 中切换到该文件后，
+输入命令 mysql -uroot -p 后回车
+输入命令  use mysql;
+输入命令  update user set password=password('12345670') where user='root';
+输入命令  flush privileges;
+关闭cmd
+
+然后在 phpMyAdmin文件下找到config.inc.php: 即为c\xampp\phpMyAdmin\config.inc.php
+修改password = 12345670
