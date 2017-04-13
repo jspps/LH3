@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016-06-05 18:39:16
--- 服务器版本： 5.6.21
--- PHP Version: 5.6.3
+-- Generation Time: 2017-04-13 09:32:52
+-- 服务器版本： 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,53 +14,27 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `learnhall3_log`
+-- Database: `learnhall3_cfg`
 --
-CREATE DATABASE IF NOT EXISTS `learnhall3_log` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `learnhall3_log`;
-
-
-DELIMITER $$
+DROP DATABASE IF EXISTS `learnhall3_cfg`;
+CREATE DATABASE IF NOT EXISTS `learnhall3_cfg` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `learnhall3_cfg`;
 --
--- 存储过程
+-- Database: `learnhall3_design`
 --
-DROP PROCEDURE IF EXISTS `pro_rnkProfit4Del`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `pro_rnkProfit4Del`()
-BEGIN
-	DECLARE b int default 0;
-	DECLARE deltb varchar(100) character set utf8 default '';
-    DECLARE cur CURSOR FOR SELECT CONCAT('DROP TABLE IF EXISTS ', table_name, ';' ) AS dtbname FROM information_schema.tables WHERE (table_name LIKE 'rnk4profit%') AND (table_name NOT LIKE CONCAT("%",DATE_FORMAT(NOW(),'%Y%m%d'),"%") AND table_name NOT LIKE CONCAT("%",DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 1 DAY),'%Y%m%d'),"%") AND table_name NOT LIKE CONCAT("%",DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 2 DAY),'%Y%m%d'),"%") AND table_name NOT LIKE CONCAT("%",DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 3 DAY),'%Y%m%d'),"%"));
-	DECLARE CONTINUE HANDLER FOR NOT FOUND SET b = 1;
-    OPEN cur;
-	FETCH cur INTO deltb;
-	WHILE b <> 1 DO
-		SET @sql1 = concat("",deltb);
-		PREPARE sql1 FROM @sql1;
-		EXECUTE sql1;
-		DEALLOCATE PREPARE sql1;
-		SET b = 0;
-		FETCH cur INTO deltb;
-    END WHILE;
-    CLOSE cur;
-END$$
-
-DELIMITER ;
---
--- Database: `learnhall3`
---
-CREATE DATABASE IF NOT EXISTS `learnhall3` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `learnhall3`;
+DROP DATABASE IF EXISTS `learnhall3_design`;
+CREATE DATABASE IF NOT EXISTS `learnhall3_design` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `learnhall3_design`;
 
 DELIMITER $$
 --
 -- 存储过程
 --
 DROP PROCEDURE IF EXISTS `pro_rnk4profit`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `pro_rnk4profit`(in parsType int)
-BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pro_rnk4profit` (IN `parsType` INT)  BEGIN
 	DECLARE rnk varchar(64) character set utf8;
 	DECLARE chn varchar(64) character set utf8 default 'agent';
 	IF parsType = 1 then
@@ -119,8 +93,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS `pro_rnkProfit4Del`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `pro_rnkProfit4Del`()
-BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pro_rnkProfit4Del` ()  BEGIN
 	DECLARE b int default 0;
 	DECLARE deltb varchar(100) character set utf8 default '';
     DECLARE cur CURSOR FOR SELECT CONCAT('DROP TABLE IF EXISTS ', table_name, ';' ) AS dtbname FROM information_schema.tables WHERE (table_name LIKE 'rnk4profit%') AND (table_name NOT LIKE CONCAT("%",DATE_FORMAT(NOW(),'%Y%m%d'),"%") AND table_name NOT LIKE CONCAT("%",DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 1 DAY),'%Y%m%d'),"%") AND table_name NOT LIKE CONCAT("%",DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 2 DAY),'%Y%m%d'),"%") AND table_name NOT LIKE CONCAT("%",DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 3 DAY),'%Y%m%d'),"%"));
@@ -148,7 +121,7 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE IF NOT EXISTS `account` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `lgid` varchar(32) NOT NULL COMMENT '登陆账号',
   `phone` varchar(32) NOT NULL COMMENT '手机号码11位',
   `email` varchar(128) NOT NULL,
@@ -156,7 +129,11 @@ CREATE TABLE IF NOT EXISTS `account` (
   `type` int(11) NOT NULL COMMENT '类型[1管理员,2学习中心,3代理商,4学生,5程序,6美工]',
   `status` int(11) NOT NULL COMMENT '状态[0正常,1已被删除]',
   `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
-  `lasttime` datetime NOT NULL COMMENT '最后操作时间'
+  `lasttime` datetime NOT NULL COMMENT '最后操作时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `lgid` (`lgid`),
+  UNIQUE KEY `phone` (`phone`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -167,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `account` (
 
 DROP TABLE IF EXISTS `adcourses`;
 CREATE TABLE IF NOT EXISTS `adcourses` (
-`cid` int(11) NOT NULL COMMENT '课程管理表',
+  `cid` int(11) NOT NULL AUTO_INCREMENT COMMENT '课程管理表',
   `departid` int(11) NOT NULL COMMENT '题库分类ID',
   `nmMajor` varchar(256) NOT NULL COMMENT '专业',
   `nmLevel` varchar(256) NOT NULL COMMENT '层次',
@@ -182,7 +159,8 @@ CREATE TABLE IF NOT EXISTS `adcourses` (
   `art` int(11) NOT NULL COMMENT '美工提成(RMB:元)',
   `status` int(11) NOT NULL COMMENT '状态0正常,1删除',
   `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
-  `imgurl4major` varchar(128) NOT NULL COMMENT '专业图片'
+  PRIMARY KEY (`cid`),
+  KEY `departid` (`departid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -193,11 +171,13 @@ CREATE TABLE IF NOT EXISTS `adcourses` (
 
 DROP TABLE IF EXISTS `adprivilege`;
 CREATE TABLE IF NOT EXISTS `adprivilege` (
-`prid` int(11) NOT NULL COMMENT '标识',
+  `prid` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `name` varchar(30) NOT NULL COMMENT '权限名',
   `pdesc` varchar(200) NOT NULL DEFAULT '' COMMENT '描述',
   `url` varchar(200) NOT NULL DEFAULT '' COMMENT '请求地址',
-  `parentid` int(11) NOT NULL DEFAULT '0' COMMENT '父级权限'
+  `parentid` int(11) NOT NULL DEFAULT '0' COMMENT '父级权限',
+  PRIMARY KEY (`prid`),
+  KEY `fk_privilege` (`parentid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -208,8 +188,10 @@ CREATE TABLE IF NOT EXISTS `adprivilege` (
 
 DROP TABLE IF EXISTS `adqdepartment`;
 CREATE TABLE IF NOT EXISTS `adqdepartment` (
-`did` int(11) NOT NULL COMMENT '大分类标识',
-  `name` varchar(16) NOT NULL COMMENT '名字'
+  `did` int(11) NOT NULL AUTO_INCREMENT COMMENT '大分类标识',
+  `name` varchar(16) NOT NULL COMMENT '名字',
+  PRIMARY KEY (`did`),
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -220,11 +202,14 @@ CREATE TABLE IF NOT EXISTS `adqdepartment` (
 
 DROP TABLE IF EXISTS `aduser`;
 CREATE TABLE IF NOT EXISTS `aduser` (
-`uid` int(11) NOT NULL COMMENT '标识',
+  `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `accountid` int(11) NOT NULL COMMENT '帐号标识',
   `uname` varchar(50) NOT NULL COMMENT '用户名',
   `powerids` varchar(128) NOT NULL COMMENT '权限IDS(0表示所有权限)',
-  `remarks` varchar(200) DEFAULT NULL COMMENT '备注'
+  `remarks` varchar(200) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `uname` (`uname`),
+  UNIQUE KEY `accountid` (`accountid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -235,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `aduser` (
 
 DROP TABLE IF EXISTS `agent`;
 CREATE TABLE IF NOT EXISTS `agent` (
-`agid` int(11) NOT NULL,
+  `agid` int(11) NOT NULL AUTO_INCREMENT,
   `accountid` int(11) NOT NULL COMMENT '帐号标识',
   `uname` varchar(50) NOT NULL COMMENT '代理商名称',
   `code` varchar(64) NOT NULL COMMENT '代理编码(联系号码)',
@@ -254,7 +239,10 @@ CREATE TABLE IF NOT EXISTS `agent` (
   `examineStatus` int(11) NOT NULL COMMENT '审核状态 0 初始化 1审核中 2审核不通过 3审核通过',
   `examineDes` text NOT NULL COMMENT '审核内容',
   `alipay` varchar(256) NOT NULL COMMENT '支付宝帐号',
-  `isVerifyAlipay` bit(1) NOT NULL COMMENT '是否验证支付宝'
+  `isVerifyAlipay` bit(1) NOT NULL COMMENT '是否验证支付宝',
+  PRIMARY KEY (`agid`),
+  UNIQUE KEY `code` (`code`),
+  UNIQUE KEY `accountid` (`accountid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -265,12 +253,16 @@ CREATE TABLE IF NOT EXISTS `agent` (
 
 DROP TABLE IF EXISTS `answer`;
 CREATE TABLE IF NOT EXISTS `answer` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `askid` int(11) NOT NULL COMMENT '提问id',
   `customerid` int(11) NOT NULL COMMENT '消费者id（学生id）',
   `content` text NOT NULL COMMENT '回复内容',
   `status` int(11) NOT NULL COMMENT '状态0正常,1删除',
-  `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间'
+  `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `askid_custid` (`askid`,`customerid`),
+  KEY `customerid` (`customerid`),
+  KEY `askid` (`askid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='提问回复';
 
 -- --------------------------------------------------------
@@ -281,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `answer` (
 
 DROP TABLE IF EXISTS `appraise`;
 CREATE TABLE IF NOT EXISTS `appraise` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `appraisetext` text NOT NULL COMMENT '评论语（评论了什么）',
   `kindid` int(11) NOT NULL COMMENT '大套餐id',
   `customerid` int(11) NOT NULL COMMENT '消费者id（学生id）',
@@ -291,7 +283,10 @@ CREATE TABLE IF NOT EXISTS `appraise` (
   `kindname` varchar(256) NOT NULL COMMENT '评论的课程套餐名',
   `reback` text NOT NULL COMMENT '回复',
   `lhubid` int(11) NOT NULL COMMENT '所属学习中心id',
-  `score` int(11) NOT NULL COMMENT '评分'
+  `score` int(11) NOT NULL COMMENT '评分',
+  PRIMARY KEY (`id`),
+  KEY `customerid` (`customerid`),
+  KEY `kindid` (`kindid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='评论';
 
 -- --------------------------------------------------------
@@ -302,7 +297,7 @@ CREATE TABLE IF NOT EXISTS `appraise` (
 
 DROP TABLE IF EXISTS `ask`;
 CREATE TABLE IF NOT EXISTS `ask` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `customerid` int(11) NOT NULL COMMENT '  消费者id（学生id）',
   `title` text NOT NULL COMMENT '提问标题',
   `rewardamount` double NOT NULL COMMENT '悬赏金额',
@@ -311,7 +306,10 @@ CREATE TABLE IF NOT EXISTS `ask` (
   `tag` varchar(256) NOT NULL COMMENT '标签',
   `answerid` int(11) NOT NULL COMMENT '采纳的回复id',
   `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
-  `status_opt` int(11) NOT NULL COMMENT '0创建,1删除,2可用'
+  `status_opt` int(11) NOT NULL COMMENT '0创建,1删除,2可用',
+  PRIMARY KEY (`id`),
+  KEY `customerid` (`customerid`),
+  KEY `askid` (`answerid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -322,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `ask` (
 
 DROP TABLE IF EXISTS `boughtkinds`;
 CREATE TABLE IF NOT EXISTS `boughtkinds` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `name` varchar(256) NOT NULL COMMENT '已购套餐名',
   `customerid` int(11) NOT NULL COMMENT '购买者ID',
   `kindid` int(11) NOT NULL COMMENT '套餐ID',
@@ -332,7 +330,11 @@ CREATE TABLE IF NOT EXISTS `boughtkinds` (
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
   `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
   `validtime` date NOT NULL COMMENT '截至时间(有效期)',
-  `lhubid` int(11) NOT NULL COMMENT '所属学习中心id'
+  `lhubid` int(11) NOT NULL COMMENT '所属学习中心id',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `customerid_kind` (`customerid`,`kindid`),
+  KEY `customerid` (`customerid`),
+  KEY `kindid` (`kindid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -343,10 +345,11 @@ CREATE TABLE IF NOT EXISTS `boughtkinds` (
 
 DROP TABLE IF EXISTS `cfgs`;
 CREATE TABLE IF NOT EXISTS `cfgs` (
-`cfgid` int(11) NOT NULL COMMENT '常量表标识',
+  `cfgid` int(11) NOT NULL AUTO_INCREMENT COMMENT '常量表标识',
   `name` varchar(32) NOT NULL COMMENT '名',
   `valStr` text NOT NULL COMMENT '字符串值',
-  `valInt` int(11) NOT NULL COMMENT 'int值'
+  `valInt` int(11) NOT NULL COMMENT 'int值',
+  PRIMARY KEY (`cfgid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -357,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `cfgs` (
 
 DROP TABLE IF EXISTS `customer`;
 CREATE TABLE IF NOT EXISTS `customer` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `accountid` int(11) NOT NULL,
   `name` varchar(256) NOT NULL COMMENT '名字',
   `kbiAll` int(11) NOT NULL COMMENT '总考币(历史记录)',
@@ -375,7 +378,9 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `alipayRealName` varchar(256) NOT NULL COMMENT '支付宝帐号-实名制认证名',
   `isVerifyAlipay` bit(1) NOT NULL COMMENT '是否验证了支付宝帐号',
   `backAlipay` varchar(512) NOT NULL COMMENT '备份通过验证支付宝帐号',
-  `backAlipayName` varchar(256) NOT NULL COMMENT '备份通过真实姓名'
+  `backAlipayName` varchar(256) NOT NULL COMMENT '备份通过真实姓名',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `accountid` (`accountid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -386,7 +391,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
 
 DROP TABLE IF EXISTS `errorfeedback`;
 CREATE TABLE IF NOT EXISTS `errorfeedback` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `examid` int(11) NOT NULL COMMENT '试卷（课程）id ',
   `nmExam` varchar(256) NOT NULL COMMENT '试卷名',
   `optid` int(11) NOT NULL COMMENT '考题id ',
@@ -397,7 +402,12 @@ CREATE TABLE IF NOT EXISTS `errorfeedback` (
   `description` text NOT NULL COMMENT '主要问题',
   `lhubid` int(11) NOT NULL COMMENT '所属学习中心',
   `status` int(11) NOT NULL COMMENT '状态0正常,1删除',
-  `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间'
+  `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `examid` (`examid`),
+  KEY `customerid` (`customerid`),
+  KEY `lhubid` (`lhubid`),
+  KEY `optquestionid` (`optid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='错误反馈';
 
 -- --------------------------------------------------------
@@ -408,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `errorfeedback` (
 
 DROP TABLE IF EXISTS `exam`;
 CREATE TABLE IF NOT EXISTS `exam` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `examtypeid` int(11) NOT NULL COMMENT '分类ID',
   `name` varchar(128) NOT NULL COMMENT '试卷名称',
   `score` int(11) NOT NULL COMMENT '总分',
@@ -418,7 +428,11 @@ CREATE TABLE IF NOT EXISTS `exam` (
   `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
   `productid` int(11) NOT NULL COMMENT '产品标识',
   `pro0etpid` int(11) NOT NULL COMMENT '产品试卷类型中间表标识',
-  `descstr` text NOT NULL COMMENT '试卷说明，简介'
+  `descstr` text NOT NULL COMMENT '试卷说明，简介',
+  PRIMARY KEY (`id`),
+  KEY `examtypeid` (`examtypeid`),
+  KEY `lhubid` (`lhubid`),
+  KEY `pro0etpid` (`pro0etpid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -429,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `exam` (
 
 DROP TABLE IF EXISTS `examcatalog`;
 CREATE TABLE IF NOT EXISTS `examcatalog` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `examid` int(11) NOT NULL COMMENT '试卷标识',
   `serial` varchar(32) NOT NULL COMMENT '大题序号[一,二,三]',
   `catalogType` int(11) NOT NULL COMMENT '类型[1单,2多,3判断,4填空,5简答,6论述,7案例]',
@@ -441,7 +455,10 @@ CREATE TABLE IF NOT EXISTS `examcatalog` (
   `title` text NOT NULL COMMENT '题干',
   `status` int(11) NOT NULL COMMENT '状态0正常,1删除',
   `createtime` datetime NOT NULL COMMENT '创建时间',
-  `parentid` int(11) NOT NULL COMMENT 'catalogType为7时,父级id'
+  `parentid` int(11) NOT NULL COMMENT 'catalogType为7时,父级id',
+  PRIMARY KEY (`id`),
+  KEY `examid` (`examid`),
+  KEY `parentid` (`parentid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='试卷目录:单选，多选...';
 
 -- --------------------------------------------------------
@@ -452,8 +469,10 @@ CREATE TABLE IF NOT EXISTS `examcatalog` (
 
 DROP TABLE IF EXISTS `examtype`;
 CREATE TABLE IF NOT EXISTS `examtype` (
-`id` int(11) NOT NULL,
-  `name` varchar(128) NOT NULL COMMENT '章节练习,历年真题,全真模拟,考前押题,知识要点,ITM辅助'
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL COMMENT '章节练习,历年真题,全真模拟,考前押题,知识要点,ITM辅助',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -464,7 +483,7 @@ CREATE TABLE IF NOT EXISTS `examtype` (
 
 DROP TABLE IF EXISTS `exchangermb`;
 CREATE TABLE IF NOT EXISTS `exchangermb` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `type` int(11) NOT NULL COMMENT '0学员,1lhub,2agent',
   `makerid` int(11) NOT NULL COMMENT '操作者ID',
   `nmMaker` varchar(512) NOT NULL COMMENT '操作者姓名',
@@ -479,7 +498,10 @@ CREATE TABLE IF NOT EXISTS `exchangermb` (
   `statusOpt` int(11) NOT NULL DEFAULT '0' COMMENT '0审核中,1取消中,2已取消,3拒绝，4同意,5成功',
   `createtime` datetime NOT NULL COMMENT '创建时间',
   `content` text NOT NULL COMMENT '回调内容',
-  `lasttime` datetime NOT NULL COMMENT '最后一次操作时间'
+  `lasttime` datetime NOT NULL COMMENT '最后一次操作时间',
+  PRIMARY KEY (`id`),
+  KEY `type_makerid` (`type`,`makerid`),
+  KEY `batchNo` (`batchNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='申请兑换人民币';
 
 -- --------------------------------------------------------
@@ -490,14 +512,16 @@ CREATE TABLE IF NOT EXISTS `exchangermb` (
 
 DROP TABLE IF EXISTS `itms4auto`;
 CREATE TABLE IF NOT EXISTS `itms4auto` (
-`id` int(11) NOT NULL COMMENT '智能组题模版标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '智能组题模版标识',
   `kindid` int(11) NOT NULL COMMENT '套餐标识',
   `num4radio` int(11) NOT NULL COMMENT '单选',
   `num4chbox` int(11) NOT NULL COMMENT '多选',
   `num4judge` int(11) NOT NULL COMMENT '判断',
   `num4fill` int(11) NOT NULL COMMENT '填空',
   `num4jd` int(11) NOT NULL COMMENT '简答',
-  `num4luns` int(11) NOT NULL COMMENT '论述'
+  `num4luns` int(11) NOT NULL COMMENT '论述',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `kindid` (`kindid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='智能组题的模版';
 
 -- --------------------------------------------------------
@@ -508,11 +532,13 @@ CREATE TABLE IF NOT EXISTS `itms4auto` (
 
 DROP TABLE IF EXISTS `itms4day`;
 CREATE TABLE IF NOT EXISTS `itms4day` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `custid` int(11) NOT NULL COMMENT '考试人',
   `kindid` int(11) NOT NULL COMMENT '考试套餐',
   `rightrate` int(11) NOT NULL COMMENT '正确率',
-  `createtime` date NOT NULL COMMENT '创建时间'
+  `createtime` date NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `custid_kindid` (`custid`,`kindid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -523,7 +549,7 @@ CREATE TABLE IF NOT EXISTS `itms4day` (
 
 DROP TABLE IF EXISTS `kind`;
 CREATE TABLE IF NOT EXISTS `kind` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `kclassid` int(11) NOT NULL COMMENT '套餐分类标识',
   `nmKClass` varchar(256) NOT NULL COMMENT '套餐名',
   `coursid` int(11) NOT NULL COMMENT '课程标识',
@@ -547,7 +573,14 @@ CREATE TABLE IF NOT EXISTS `kind` (
   `numVast` int(11) NOT NULL COMMENT '绝胜押题数量',
   `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
   `isHasITMS` bit(1) NOT NULL COMMENT '是否保护ITMS辅助',
-  `examids` text NOT NULL COMMENT '拥有试卷ids:1,2,3,'
+  `examids` text NOT NULL COMMENT '拥有试卷ids:1,2,3,',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `kc_pr_lhub` (`kclassid`,`productid`,`lhubid`),
+  KEY `kclassid` (`kclassid`),
+  KEY `productid` (`productid`),
+  KEY `lhubid` (`lhubid`),
+  KEY `productid_lhubid` (`productid`,`lhubid`),
+  KEY `coursid` (`coursid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -558,9 +591,10 @@ CREATE TABLE IF NOT EXISTS `kind` (
 
 DROP TABLE IF EXISTS `kindclass`;
 CREATE TABLE IF NOT EXISTS `kindclass` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `name` varchar(128) NOT NULL COMMENT '套餐分类名称',
-  `imgurl` varchar(128) NOT NULL
+  `imgurl` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -571,7 +605,7 @@ CREATE TABLE IF NOT EXISTS `kindclass` (
 
 DROP TABLE IF EXISTS `learnhub`;
 CREATE TABLE IF NOT EXISTS `learnhub` (
-`lhid` int(11) NOT NULL COMMENT '数据库唯一标识',
+  `lhid` int(11) NOT NULL AUTO_INCREMENT COMMENT '数据库唯一标识',
   `accountid` int(11) NOT NULL COMMENT '帐号标识',
   `name` varchar(64) NOT NULL COMMENT '学习中心名称',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型(1个人,2机构)',
@@ -599,7 +633,11 @@ CREATE TABLE IF NOT EXISTS `learnhub` (
   `alipay` varchar(256) NOT NULL COMMENT '支付宝帐号',
   `isVerifyAlipay` bit(1) NOT NULL COMMENT '是否验证支付宝',
   `img4idface` varchar(512) NOT NULL COMMENT '身份证正面',
-  `img4idback` varchar(256) NOT NULL COMMENT '身份证背面'
+  `img4idback` varchar(256) NOT NULL COMMENT '身份证背面',
+  `img4logo` varchar(256) NOT NULL DEFAULT '' COMMENT 'logo标识',
+  PRIMARY KEY (`lhid`),
+  UNIQUE KEY `codeid` (`codeid`),
+  UNIQUE KEY `accountid` (`accountid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -610,12 +648,14 @@ CREATE TABLE IF NOT EXISTS `learnhub` (
 
 DROP TABLE IF EXISTS `msg`;
 CREATE TABLE IF NOT EXISTS `msg` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `target` varchar(64) NOT NULL COMMENT '目标[1学生、2代理商、3学习中心]',
   `description` text NOT NULL COMMENT '消息内容',
   `num` int(11) NOT NULL COMMENT '浏览次数',
   `status` int(11) NOT NULL COMMENT '状态0正常,1删除',
-  `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间'
+  `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`target`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息';
 
 -- --------------------------------------------------------
@@ -626,7 +666,7 @@ CREATE TABLE IF NOT EXISTS `msg` (
 
 DROP TABLE IF EXISTS `openkind4customer`;
 CREATE TABLE IF NOT EXISTS `openkind4customer` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `customerid` int(11) NOT NULL COMMENT '开通体验用户ID',
   `custname` varchar(256) NOT NULL COMMENT '学员名',
   `kindid` int(11) NOT NULL COMMENT '体验套餐ID',
@@ -638,7 +678,11 @@ CREATE TABLE IF NOT EXISTS `openkind4customer` (
   `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
   `validtime` date NOT NULL COMMENT '截至时间(有效期)',
   `remarks` varchar(256) NOT NULL COMMENT '备注',
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态0初始,1,删除,2已使用'
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态0初始,1,删除,2已使用',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `custid_kindid` (`customerid`,`kindid`),
+  KEY `customerid` (`customerid`),
+  KEY `kindid` (`kindid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='开通套餐给用户去体验';
 
 -- --------------------------------------------------------
@@ -649,7 +693,7 @@ CREATE TABLE IF NOT EXISTS `openkind4customer` (
 
 DROP TABLE IF EXISTS `openkind4third`;
 CREATE TABLE IF NOT EXISTS `openkind4third` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `kindid` int(11) NOT NULL COMMENT '体验套餐id',
   `lhubid` int(11) NOT NULL DEFAULT '0' COMMENT '学习中心id',
   `agentid` int(11) NOT NULL DEFAULT '0' COMMENT '代理商id',
@@ -659,7 +703,13 @@ CREATE TABLE IF NOT EXISTS `openkind4third` (
   `nmContact` varchar(256) NOT NULL COMMENT '联系人名',
   `phone` varchar(64) NOT NULL COMMENT '联系电话',
   `createtime` datetime NOT NULL COMMENT '创建时间',
-  `status` int(11) NOT NULL COMMENT '状态'
+  `status` int(11) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `kindid_lhubid_agentid` (`kindid`,`lhubid`,`agentid`),
+  KEY `kindid` (`kindid`),
+  KEY `phone` (`phone`),
+  KEY `lhubid` (`lhubid`),
+  KEY `agentid` (`agentid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='开通套餐4第三方';
 
 -- --------------------------------------------------------
@@ -670,7 +720,7 @@ CREATE TABLE IF NOT EXISTS `openkind4third` (
 
 DROP TABLE IF EXISTS `optquestion`;
 CREATE TABLE IF NOT EXISTS `optquestion` (
-`optid` int(11) NOT NULL COMMENT '选择题标识',
+  `optid` int(11) NOT NULL AUTO_INCREMENT COMMENT '选择题标识',
   `examid` int(11) NOT NULL COMMENT '试卷ID',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型[1单,2多,3判断,4填空,5简答,6论述,7案例]',
   `content` text NOT NULL COMMENT '题的内容',
@@ -684,7 +734,12 @@ CREATE TABLE IF NOT EXISTS `optquestion` (
   `examcatalogid` int(11) NOT NULL COMMENT '试卷目录标识',
   `answernum` int(11) NOT NULL COMMENT '答案题数超过4以上才用',
   `gid` int(11) NOT NULL DEFAULT '0' COMMENT 'type下小分类[1单2多3判4填空5简答6论述]',
-  `imgPic` varchar(256) NOT NULL COMMENT '图片补充'
+  `imgPic` varchar(256) NOT NULL COMMENT '图片补充',
+  PRIMARY KEY (`optid`),
+  KEY `type` (`type`),
+  KEY `examid` (`examid`),
+  KEY `examid_catalogid` (`examid`,`examcatalogid`),
+  KEY `examcatalogid` (`examcatalogid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -695,7 +750,7 @@ CREATE TABLE IF NOT EXISTS `optquestion` (
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `type` int(11) NOT NULL COMMENT '0套餐,1lhub_test,2agent_test,3考币,4问答',
   `name` varchar(256) NOT NULL COMMENT '购买产生的订单名字',
   `extra_param` varchar(512) NOT NULL COMMENT '额外参数[套餐ids...]',
@@ -710,7 +765,11 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `recommendCode` varchar(64) NOT NULL COMMENT '推荐号',
   `lasttime` datetime NOT NULL COMMENT '最后一次操作时间',
   `orderNo` varchar(64) NOT NULL COMMENT '订单编号唯一',
-  `realprice` double NOT NULL COMMENT '实际支付价格'
+  `realprice` double NOT NULL COMMENT '实际支付价格',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `orderNo` (`orderNo`),
+  KEY `kindid` (`extra_param`(255)),
+  KEY `type_makeid` (`type`,`makerid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 -- --------------------------------------------------------
@@ -721,7 +780,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
 
 DROP TABLE IF EXISTS `orders4profit`;
 CREATE TABLE IF NOT EXISTS `orders4profit` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `orderNo` varchar(64) NOT NULL COMMENT '订单编号唯一',
   `kindid` int(11) NOT NULL COMMENT '套餐id',
   `custid` int(11) NOT NULL COMMENT '消费者id(学生id)',
@@ -739,7 +798,13 @@ CREATE TABLE IF NOT EXISTS `orders4profit` (
   `isProfit4Agent` bit(1) NOT NULL COMMENT '代理商是否提成',
   `isProfit4Lhub` bit(1) NOT NULL COMMENT '学习中心是否提成',
   `status` int(11) NOT NULL COMMENT '0正常,1删除',
-  `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间'
+  `createtime` datetime NOT NULL DEFAULT '2015-04-01 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `orderNo` (`orderNo`),
+  KEY `custid` (`custid`),
+  KEY `lhubid` (`lhubid`),
+  KEY `agentid` (`agentid`),
+  KEY `kindid` (`kindid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单_分润记录表';
 
 -- --------------------------------------------------------
@@ -750,7 +815,7 @@ CREATE TABLE IF NOT EXISTS `orders4profit` (
 
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE IF NOT EXISTS `product` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `coursesid` int(11) NOT NULL COMMENT '课程ID',
   `name` varchar(128) NOT NULL COMMENT '产品名字',
   `imgurl` varchar(128) NOT NULL COMMENT '图标地址',
@@ -765,7 +830,10 @@ CREATE TABLE IF NOT EXISTS `product` (
   `isRecommend` bit(1) NOT NULL COMMENT '是否推荐',
   `lastTime4Recommend` datetime NOT NULL COMMENT '最后推荐时间',
   `protection` text NOT NULL COMMENT '消费者保障',
-  `lasttime` datetime NOT NULL COMMENT '最后操作时间'
+  `lasttime` datetime NOT NULL COMMENT '最后操作时间',
+  PRIMARY KEY (`id`),
+  KEY `coursesid` (`coursesid`),
+  KEY `lhubid` (`lhubid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -776,7 +844,7 @@ CREATE TABLE IF NOT EXISTS `product` (
 
 DROP TABLE IF EXISTS `product0examtype`;
 CREATE TABLE IF NOT EXISTS `product0examtype` (
-`id` int(11) NOT NULL COMMENT '唯一标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
   `lhubid` int(11) NOT NULL COMMENT '学习中心标识',
   `productid` int(11) NOT NULL COMMENT '产品标识',
   `examtypeid` int(11) NOT NULL COMMENT '类型ID',
@@ -784,7 +852,12 @@ CREATE TABLE IF NOT EXISTS `product0examtype` (
   `friend` int(11) NOT NULL COMMENT '朋友数量',
   `kbi` int(11) NOT NULL COMMENT '购买后拥有考币数量',
   `status` int(11) NOT NULL COMMENT '0正常，1删除',
-  `createtime` datetime NOT NULL COMMENT '创建时间'
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `lhubid_prid_etypeid` (`lhubid`,`productid`,`examtypeid`),
+  KEY `lhubid` (`lhubid`),
+  KEY `productid` (`productid`),
+  KEY `examtypeid` (`examtypeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -795,11 +868,12 @@ CREATE TABLE IF NOT EXISTS `product0examtype` (
 
 DROP TABLE IF EXISTS `record4orders`;
 CREATE TABLE IF NOT EXISTS `record4orders` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `orderNo` varchar(64) NOT NULL COMMENT '订单号',
   `tradeNo` varchar(64) NOT NULL COMMENT '第三方订单号',
   `content` text NOT NULL COMMENT '回调内容',
-  `createtime` datetime NOT NULL COMMENT '创建时间'
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -810,10 +884,12 @@ CREATE TABLE IF NOT EXISTS `record4orders` (
 
 DROP TABLE IF EXISTS `record4seeanswer`;
 CREATE TABLE IF NOT EXISTS `record4seeanswer` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `askid` int(11) NOT NULL COMMENT '问题标识',
   `custid` int(11) NOT NULL COMMENT '查看人标识',
-  `createtime` datetime NOT NULL COMMENT '创建时间'
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `askid` (`askid`,`custid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录查看满意答案';
 
 -- --------------------------------------------------------
@@ -824,7 +900,7 @@ CREATE TABLE IF NOT EXISTS `record4seeanswer` (
 
 DROP TABLE IF EXISTS `recordanswer`;
 CREATE TABLE IF NOT EXISTS `recordanswer` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `examid` int(11) NOT NULL COMMENT '考卷id',
   `nmExam` varchar(256) NOT NULL COMMENT '试卷名字',
   `customerid` int(11) NOT NULL COMMENT '考试学员标识',
@@ -844,7 +920,12 @@ CREATE TABLE IF NOT EXISTS `recordanswer` (
   `lens4exam` int(11) NOT NULL COMMENT '试题总数量',
   `lens4right` int(11) NOT NULL COMMENT '正确总数量',
   `courseid` int(11) NOT NULL COMMENT '课程标识',
-  `lhubid` int(11) NOT NULL DEFAULT '0' COMMENT '所属学习中心'
+  `lhubid` int(11) NOT NULL DEFAULT '0' COMMENT '所属学习中心',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `examid_cust_id` (`examid`,`customerid`),
+  KEY `examid` (`examid`),
+  KEY `customerid` (`customerid`),
+  KEY `courseid` (`courseid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录在线答题';
 
 -- --------------------------------------------------------
@@ -855,14 +936,18 @@ CREATE TABLE IF NOT EXISTS `recordanswer` (
 
 DROP TABLE IF EXISTS `recordfee4customer`;
 CREATE TABLE IF NOT EXISTS `recordfee4customer` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `type` int(11) NOT NULL DEFAULT '2' COMMENT '1收入,2支出',
   `custid` int(11) NOT NULL COMMENT '学员ID',
   `custname` varchar(256) NOT NULL COMMENT '学员名',
   `val` double NOT NULL COMMENT '数值',
   `cont` varchar(512) NOT NULL COMMENT '购买描述内容(64个汉字)',
   `kindid` int(11) NOT NULL COMMENT '购买套餐ID',
-  `createtime` datetime NOT NULL COMMENT '创建时间'
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `type_custid` (`type`,`custid`),
+  KEY `type_custid_kindid` (`type`,`custid`,`kindid`),
+  KEY `custid` (`custid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录用户金额支出,收入记录';
 
 -- --------------------------------------------------------
@@ -873,13 +958,16 @@ CREATE TABLE IF NOT EXISTS `recordfee4customer` (
 
 DROP TABLE IF EXISTS `recordkbi4customer`;
 CREATE TABLE IF NOT EXISTS `recordkbi4customer` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `type` int(11) NOT NULL DEFAULT '2' COMMENT '1收入,2支出',
   `custid` int(11) NOT NULL COMMENT '学员ID',
   `custname` varchar(256) NOT NULL COMMENT '学员名',
   `val` double NOT NULL COMMENT '数值',
   `cont` varchar(512) NOT NULL COMMENT '购买描述内容(64个汉字)',
-  `createtime` datetime NOT NULL COMMENT '创建时间'
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `type_custid` (`type`,`custid`),
+  KEY `custid` (`custid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录用户考币支出,收入记录()';
 
 -- --------------------------------------------------------
@@ -890,12 +978,17 @@ CREATE TABLE IF NOT EXISTS `recordkbi4customer` (
 
 DROP TABLE IF EXISTS `recordques4exam`;
 CREATE TABLE IF NOT EXISTS `recordques4exam` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `customid` int(11) NOT NULL COMMENT '考试者',
   `questionid` int(11) NOT NULL COMMENT '问题id',
   `catalog4Exam` int(11) NOT NULL COMMENT '所属试卷类型[单,多,判断]]',
   `numError` int(11) NOT NULL DEFAULT '1' COMMENT '出错次数',
-  `createtime` datetime NOT NULL COMMENT '创建时间'
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `customid_quesid` (`customid`,`questionid`),
+  KEY `customid` (`customid`),
+  KEY `questionid` (`questionid`),
+  KEY `customid_catalog` (`customid`,`catalog4Exam`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='记录考试数出错题';
 
 -- --------------------------------------------------------
@@ -906,13 +999,15 @@ CREATE TABLE IF NOT EXISTS `recordques4exam` (
 
 DROP TABLE IF EXISTS `rnk4profit`;
 CREATE TABLE IF NOT EXISTS `rnk4profit` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `indexs` int(11) NOT NULL COMMENT '排序名次',
   `type` int(11) NOT NULL COMMENT '0代理商,1学习中心',
   `ownerid` int(11) NOT NULL COMMENT '拥有者标识[agentid/lhubid]',
   `money` double NOT NULL COMMENT '成交金额',
   `bonus` double NOT NULL COMMENT '代理奖金/学中押金',
-  `royalty` double NOT NULL COMMENT '提成'
+  `royalty` double NOT NULL COMMENT '提成',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `type_ownerid` (`type`,`ownerid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='分润排行榜表';
 
 -- --------------------------------------------------------
@@ -923,438 +1018,16 @@ CREATE TABLE IF NOT EXISTS `rnk4profit` (
 
 DROP TABLE IF EXISTS `shoppingcart`;
 CREATE TABLE IF NOT EXISTS `shoppingcart` (
-`id` int(11) NOT NULL COMMENT '标识',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识',
   `customerid` int(11) NOT NULL COMMENT '消费者id（学生id）',
   `kindid` int(11) NOT NULL COMMENT '大套餐id',
-  `agentCode` varchar(256) NOT NULL COMMENT '代理商推荐号'
+  `agentCode` varchar(256) NOT NULL COMMENT '代理商推荐号',
+  PRIMARY KEY (`id`),
+  KEY `custid_kindid` (`customerid`,`kindid`),
+  KEY `customerid` (`customerid`),
+  KEY `kindid` (`kindid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='购物车';
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `account`
---
-ALTER TABLE `account`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `lgid` (`lgid`), ADD UNIQUE KEY `phone` (`phone`), ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `adcourses`
---
-ALTER TABLE `adcourses`
- ADD PRIMARY KEY (`cid`), ADD KEY `departid` (`departid`);
-
---
--- Indexes for table `adprivilege`
---
-ALTER TABLE `adprivilege`
- ADD PRIMARY KEY (`prid`), ADD KEY `fk_privilege` (`parentid`);
-
---
--- Indexes for table `adqdepartment`
---
-ALTER TABLE `adqdepartment`
- ADD PRIMARY KEY (`did`), ADD UNIQUE KEY `name` (`name`);
-
---
--- Indexes for table `aduser`
---
-ALTER TABLE `aduser`
- ADD PRIMARY KEY (`uid`), ADD UNIQUE KEY `uname` (`uname`), ADD UNIQUE KEY `accountid` (`accountid`);
-
---
--- Indexes for table `agent`
---
-ALTER TABLE `agent`
- ADD PRIMARY KEY (`agid`), ADD UNIQUE KEY `code` (`code`), ADD UNIQUE KEY `accountid` (`accountid`);
-
---
--- Indexes for table `answer`
---
-ALTER TABLE `answer`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `askid_custid` (`askid`,`customerid`), ADD KEY `customerid` (`customerid`), ADD KEY `askid` (`askid`);
-
---
--- Indexes for table `appraise`
---
-ALTER TABLE `appraise`
- ADD PRIMARY KEY (`id`), ADD KEY `customerid` (`customerid`), ADD KEY `kindid` (`kindid`);
-
---
--- Indexes for table `ask`
---
-ALTER TABLE `ask`
- ADD PRIMARY KEY (`id`), ADD KEY `customerid` (`customerid`), ADD KEY `askid` (`answerid`);
-
---
--- Indexes for table `boughtkinds`
---
-ALTER TABLE `boughtkinds`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `customerid_kind` (`customerid`,`kindid`), ADD KEY `customerid` (`customerid`), ADD KEY `kindid` (`kindid`);
-
---
--- Indexes for table `cfgs`
---
-ALTER TABLE `cfgs`
- ADD PRIMARY KEY (`cfgid`);
-
---
--- Indexes for table `customer`
---
-ALTER TABLE `customer`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `accountid` (`accountid`);
-
---
--- Indexes for table `errorfeedback`
---
-ALTER TABLE `errorfeedback`
- ADD PRIMARY KEY (`id`), ADD KEY `examid` (`examid`), ADD KEY `customerid` (`customerid`), ADD KEY `lhubid` (`lhubid`), ADD KEY `optquestionid` (`optid`);
-
---
--- Indexes for table `exam`
---
-ALTER TABLE `exam`
- ADD PRIMARY KEY (`id`), ADD KEY `examtypeid` (`examtypeid`), ADD KEY `lhubid` (`lhubid`), ADD KEY `pro0etpid` (`pro0etpid`);
-
---
--- Indexes for table `examcatalog`
---
-ALTER TABLE `examcatalog`
- ADD PRIMARY KEY (`id`), ADD KEY `examid` (`examid`), ADD KEY `parentid` (`parentid`);
-
---
--- Indexes for table `examtype`
---
-ALTER TABLE `examtype`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
-
---
--- Indexes for table `exchangermb`
---
-ALTER TABLE `exchangermb`
- ADD PRIMARY KEY (`id`), ADD KEY `type_makerid` (`type`,`makerid`), ADD KEY `batchNo` (`batchNo`);
-
---
--- Indexes for table `itms4auto`
---
-ALTER TABLE `itms4auto`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `kindid` (`kindid`);
-
---
--- Indexes for table `itms4day`
---
-ALTER TABLE `itms4day`
- ADD PRIMARY KEY (`id`), ADD KEY `custid_kindid` (`custid`,`kindid`);
-
---
--- Indexes for table `kind`
---
-ALTER TABLE `kind`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `kc_pr_lhub` (`kclassid`,`productid`,`lhubid`), ADD KEY `kclassid` (`kclassid`), ADD KEY `productid` (`productid`), ADD KEY `lhubid` (`lhubid`), ADD KEY `productid_lhubid` (`productid`,`lhubid`), ADD KEY `coursid` (`coursid`);
-
---
--- Indexes for table `kindclass`
---
-ALTER TABLE `kindclass`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `learnhub`
---
-ALTER TABLE `learnhub`
- ADD PRIMARY KEY (`lhid`), ADD UNIQUE KEY `codeid` (`codeid`), ADD UNIQUE KEY `accountid` (`accountid`);
-
---
--- Indexes for table `msg`
---
-ALTER TABLE `msg`
- ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`target`);
-
---
--- Indexes for table `openkind4customer`
---
-ALTER TABLE `openkind4customer`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `custid_kindid` (`customerid`,`kindid`), ADD KEY `customerid` (`customerid`), ADD KEY `kindid` (`kindid`);
-
---
--- Indexes for table `openkind4third`
---
-ALTER TABLE `openkind4third`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `kindid_lhubid_agentid` (`kindid`,`lhubid`,`agentid`), ADD KEY `kindid` (`kindid`), ADD KEY `phone` (`phone`), ADD KEY `lhubid` (`lhubid`), ADD KEY `agentid` (`agentid`);
-
---
--- Indexes for table `optquestion`
---
-ALTER TABLE `optquestion`
- ADD PRIMARY KEY (`optid`), ADD KEY `type` (`type`), ADD KEY `examid` (`examid`), ADD KEY `examid_catalogid` (`examid`,`examcatalogid`), ADD KEY `examcatalogid` (`examcatalogid`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `orderNo` (`orderNo`), ADD KEY `kindid` (`extra_param`(255)), ADD KEY `type_makeid` (`type`,`makerid`);
-
---
--- Indexes for table `orders4profit`
---
-ALTER TABLE `orders4profit`
- ADD PRIMARY KEY (`id`), ADD KEY `orderNo` (`orderNo`), ADD KEY `custid` (`custid`), ADD KEY `lhubid` (`lhubid`), ADD KEY `agentid` (`agentid`), ADD KEY `kindid` (`kindid`);
-
---
--- Indexes for table `product`
---
-ALTER TABLE `product`
- ADD PRIMARY KEY (`id`), ADD KEY `coursesid` (`coursesid`), ADD KEY `lhubid` (`lhubid`);
-
---
--- Indexes for table `product0examtype`
---
-ALTER TABLE `product0examtype`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `lhubid_prid_etypeid` (`lhubid`,`productid`,`examtypeid`), ADD KEY `lhubid` (`lhubid`), ADD KEY `productid` (`productid`), ADD KEY `examtypeid` (`examtypeid`);
-
---
--- Indexes for table `record4orders`
---
-ALTER TABLE `record4orders`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `record4seeanswer`
---
-ALTER TABLE `record4seeanswer`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `askid` (`askid`,`custid`);
-
---
--- Indexes for table `recordanswer`
---
-ALTER TABLE `recordanswer`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `examid_cust_id` (`examid`,`customerid`), ADD KEY `examid` (`examid`), ADD KEY `customerid` (`customerid`), ADD KEY `courseid` (`courseid`);
-
---
--- Indexes for table `recordfee4customer`
---
-ALTER TABLE `recordfee4customer`
- ADD PRIMARY KEY (`id`), ADD KEY `type_custid` (`type`,`custid`), ADD KEY `type_custid_kindid` (`type`,`custid`,`kindid`), ADD KEY `custid` (`custid`);
-
---
--- Indexes for table `recordkbi4customer`
---
-ALTER TABLE `recordkbi4customer`
- ADD PRIMARY KEY (`id`), ADD KEY `type_custid` (`type`,`custid`), ADD KEY `custid` (`custid`);
-
---
--- Indexes for table `recordques4exam`
---
-ALTER TABLE `recordques4exam`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `customid_quesid` (`customid`,`questionid`), ADD KEY `customid` (`customid`), ADD KEY `questionid` (`questionid`), ADD KEY `customid_catalog` (`customid`,`catalog4Exam`);
-
---
--- Indexes for table `rnk4profit`
---
-ALTER TABLE `rnk4profit`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `type_ownerid` (`type`,`ownerid`);
-
---
--- Indexes for table `shoppingcart`
---
-ALTER TABLE `shoppingcart`
- ADD PRIMARY KEY (`id`), ADD KEY `custid_kindid` (`customerid`,`kindid`), ADD KEY `customerid` (`customerid`), ADD KEY `kindid` (`kindid`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `account`
---
-ALTER TABLE `account`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `adcourses`
---
-ALTER TABLE `adcourses`
-MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT COMMENT '课程管理表';
---
--- AUTO_INCREMENT for table `adprivilege`
---
-ALTER TABLE `adprivilege`
-MODIFY `prid` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `adqdepartment`
---
-ALTER TABLE `adqdepartment`
-MODIFY `did` int(11) NOT NULL AUTO_INCREMENT COMMENT '大分类标识';
---
--- AUTO_INCREMENT for table `aduser`
---
-ALTER TABLE `aduser`
-MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `agent`
---
-ALTER TABLE `agent`
-MODIFY `agid` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `answer`
---
-ALTER TABLE `answer`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `appraise`
---
-ALTER TABLE `appraise`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `ask`
---
-ALTER TABLE `ask`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `boughtkinds`
---
-ALTER TABLE `boughtkinds`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `cfgs`
---
-ALTER TABLE `cfgs`
-MODIFY `cfgid` int(11) NOT NULL AUTO_INCREMENT COMMENT '常量表标识';
---
--- AUTO_INCREMENT for table `customer`
---
-ALTER TABLE `customer`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `errorfeedback`
---
-ALTER TABLE `errorfeedback`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `exam`
---
-ALTER TABLE `exam`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `examcatalog`
---
-ALTER TABLE `examcatalog`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `examtype`
---
-ALTER TABLE `examtype`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `exchangermb`
---
-ALTER TABLE `exchangermb`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `itms4auto`
---
-ALTER TABLE `itms4auto`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '智能组题模版标识';
---
--- AUTO_INCREMENT for table `itms4day`
---
-ALTER TABLE `itms4day`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `kind`
---
-ALTER TABLE `kind`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `kindclass`
---
-ALTER TABLE `kindclass`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `learnhub`
---
-ALTER TABLE `learnhub`
-MODIFY `lhid` int(11) NOT NULL AUTO_INCREMENT COMMENT '数据库唯一标识';
---
--- AUTO_INCREMENT for table `msg`
---
-ALTER TABLE `msg`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `openkind4customer`
---
-ALTER TABLE `openkind4customer`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `openkind4third`
---
-ALTER TABLE `openkind4third`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `optquestion`
---
-ALTER TABLE `optquestion`
-MODIFY `optid` int(11) NOT NULL AUTO_INCREMENT COMMENT '选择题标识';
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `orders4profit`
---
-ALTER TABLE `orders4profit`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `product`
---
-ALTER TABLE `product`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `product0examtype`
---
-ALTER TABLE `product0examtype`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识';
---
--- AUTO_INCREMENT for table `record4orders`
---
-ALTER TABLE `record4orders`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `record4seeanswer`
---
-ALTER TABLE `record4seeanswer`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `recordanswer`
---
-ALTER TABLE `recordanswer`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `recordfee4customer`
---
-ALTER TABLE `recordfee4customer`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `recordkbi4customer`
---
-ALTER TABLE `recordkbi4customer`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `recordques4exam`
---
-ALTER TABLE `recordques4exam`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `rnk4profit`
---
-ALTER TABLE `rnk4profit`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
---
--- AUTO_INCREMENT for table `shoppingcart`
---
-ALTER TABLE `shoppingcart`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
 --
 -- 限制导出的表
 --
@@ -1363,140 +1036,140 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识';
 -- 限制表 `adcourses`
 --
 ALTER TABLE `adcourses`
-ADD CONSTRAINT `fk_2depart_id` FOREIGN KEY (`departid`) REFERENCES `adqdepartment` (`did`);
+  ADD CONSTRAINT `fk_2depart_id` FOREIGN KEY (`departid`) REFERENCES `adqdepartment` (`did`);
 
 --
 -- 限制表 `adprivilege`
 --
 ALTER TABLE `adprivilege`
-ADD CONSTRAINT `fk_privilege` FOREIGN KEY (`parentid`) REFERENCES `adprivilege` (`prid`);
+  ADD CONSTRAINT `fk_privilege` FOREIGN KEY (`parentid`) REFERENCES `adprivilege` (`prid`);
 
 --
 -- 限制表 `aduser`
 --
 ALTER TABLE `aduser`
-ADD CONSTRAINT `fk_u2a_id` FOREIGN KEY (`accountid`) REFERENCES `account` (`id`);
+  ADD CONSTRAINT `fk_u2a_id` FOREIGN KEY (`accountid`) REFERENCES `account` (`id`);
 
 --
 -- 限制表 `agent`
 --
 ALTER TABLE `agent`
-ADD CONSTRAINT `fk_ag2ac_id` FOREIGN KEY (`accountid`) REFERENCES `account` (`id`);
+  ADD CONSTRAINT `fk_ag2ac_id` FOREIGN KEY (`accountid`) REFERENCES `account` (`id`);
 
 --
 -- 限制表 `appraise`
 --
 ALTER TABLE `appraise`
-ADD CONSTRAINT `fk_ap2cus_id` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`),
-ADD CONSTRAINT `fk_ap2kind_id` FOREIGN KEY (`kindid`) REFERENCES `kind` (`id`);
+  ADD CONSTRAINT `fk_ap2cus_id` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`),
+  ADD CONSTRAINT `fk_ap2kind_id` FOREIGN KEY (`kindid`) REFERENCES `kind` (`id`);
 
 --
 -- 限制表 `boughtkinds`
 --
 ALTER TABLE `boughtkinds`
-ADD CONSTRAINT `fk_bk2cus_id` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`),
-ADD CONSTRAINT `fk_bk2kind_id` FOREIGN KEY (`kindid`) REFERENCES `kind` (`id`);
+  ADD CONSTRAINT `fk_bk2cus_id` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`),
+  ADD CONSTRAINT `fk_bk2kind_id` FOREIGN KEY (`kindid`) REFERENCES `kind` (`id`);
 
 --
 -- 限制表 `customer`
 --
 ALTER TABLE `customer`
-ADD CONSTRAINT `fk_cus2acc_id` FOREIGN KEY (`accountid`) REFERENCES `account` (`id`);
+  ADD CONSTRAINT `fk_cus2acc_id` FOREIGN KEY (`accountid`) REFERENCES `account` (`id`);
 
 --
 -- 限制表 `errorfeedback`
 --
 ALTER TABLE `errorfeedback`
-ADD CONSTRAINT `fk_err2opt_id` FOREIGN KEY (`optid`) REFERENCES `optquestion` (`optid`),
-ADD CONSTRAINT `fk_fb2cus_id` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`),
-ADD CONSTRAINT `fk_fb2exam_id` FOREIGN KEY (`examid`) REFERENCES `exam` (`id`),
-ADD CONSTRAINT `fk_fb2lhub_id` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`);
+  ADD CONSTRAINT `fk_err2opt_id` FOREIGN KEY (`optid`) REFERENCES `optquestion` (`optid`),
+  ADD CONSTRAINT `fk_fb2cus_id` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`),
+  ADD CONSTRAINT `fk_fb2exam_id` FOREIGN KEY (`examid`) REFERENCES `exam` (`id`),
+  ADD CONSTRAINT `fk_fb2lhub_id` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`);
 
 --
 -- 限制表 `exam`
 --
 ALTER TABLE `exam`
-ADD CONSTRAINT `fk_exam2type_id` FOREIGN KEY (`examtypeid`) REFERENCES `examtype` (`id`);
+  ADD CONSTRAINT `fk_exam2type_id` FOREIGN KEY (`examtypeid`) REFERENCES `examtype` (`id`);
 
 --
 -- 限制表 `examcatalog`
 --
 ALTER TABLE `examcatalog`
-ADD CONSTRAINT `catalog2exam_id` FOREIGN KEY (`examid`) REFERENCES `exam` (`id`),
-ADD CONSTRAINT `fk_ec_parentid` FOREIGN KEY (`parentid`) REFERENCES `examcatalog` (`id`);
+  ADD CONSTRAINT `catalog2exam_id` FOREIGN KEY (`examid`) REFERENCES `exam` (`id`),
+  ADD CONSTRAINT `fk_ec_parentid` FOREIGN KEY (`parentid`) REFERENCES `examcatalog` (`id`);
 
 --
 -- 限制表 `kind`
 --
 ALTER TABLE `kind`
-ADD CONSTRAINT `fk_kind2course_id` FOREIGN KEY (`coursid`) REFERENCES `adcourses` (`cid`),
-ADD CONSTRAINT `fk_kind2kc_id` FOREIGN KEY (`kclassid`) REFERENCES `kindclass` (`id`),
-ADD CONSTRAINT `fk_kind2lhub_id` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`),
-ADD CONSTRAINT `fk_kind2pro_id` FOREIGN KEY (`productid`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `fk_kind2course_id` FOREIGN KEY (`coursid`) REFERENCES `adcourses` (`cid`),
+  ADD CONSTRAINT `fk_kind2kc_id` FOREIGN KEY (`kclassid`) REFERENCES `kindclass` (`id`),
+  ADD CONSTRAINT `fk_kind2lhub_id` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`),
+  ADD CONSTRAINT `fk_kind2pro_id` FOREIGN KEY (`productid`) REFERENCES `product` (`id`);
 
 --
 -- 限制表 `learnhub`
 --
 ALTER TABLE `learnhub`
-ADD CONSTRAINT `fk_lhub2acc_id` FOREIGN KEY (`accountid`) REFERENCES `account` (`id`);
+  ADD CONSTRAINT `fk_lhub2acc_id` FOREIGN KEY (`accountid`) REFERENCES `account` (`id`);
 
 --
 -- 限制表 `openkind4customer`
 --
 ALTER TABLE `openkind4customer`
-ADD CONSTRAINT `open_cust_id` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`),
-ADD CONSTRAINT `open_kind_id` FOREIGN KEY (`kindid`) REFERENCES `kind` (`id`);
+  ADD CONSTRAINT `open_cust_id` FOREIGN KEY (`customerid`) REFERENCES `customer` (`id`),
+  ADD CONSTRAINT `open_kind_id` FOREIGN KEY (`kindid`) REFERENCES `kind` (`id`);
 
 --
 -- 限制表 `openkind4third`
 --
 ALTER TABLE `openkind4third`
-ADD CONSTRAINT `fk_third_agid` FOREIGN KEY (`agentid`) REFERENCES `agent` (`agid`),
-ADD CONSTRAINT `fk_third_kindid` FOREIGN KEY (`kindid`) REFERENCES `kind` (`id`),
-ADD CONSTRAINT `fk_third_lhubid` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`);
+  ADD CONSTRAINT `fk_third_agid` FOREIGN KEY (`agentid`) REFERENCES `agent` (`agid`),
+  ADD CONSTRAINT `fk_third_kindid` FOREIGN KEY (`kindid`) REFERENCES `kind` (`id`),
+  ADD CONSTRAINT `fk_third_lhubid` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`);
 
 --
 -- 限制表 `optquestion`
 --
 ALTER TABLE `optquestion`
-ADD CONSTRAINT `ques_ecata_id` FOREIGN KEY (`examcatalogid`) REFERENCES `examcatalog` (`id`);
+  ADD CONSTRAINT `ques_ecata_id` FOREIGN KEY (`examcatalogid`) REFERENCES `examcatalog` (`id`);
 
 --
 -- 限制表 `orders4profit`
 --
 ALTER TABLE `orders4profit`
-ADD CONSTRAINT `fk_ord_agentid` FOREIGN KEY (`agentid`) REFERENCES `agent` (`agid`),
-ADD CONSTRAINT `fk_ord_custid` FOREIGN KEY (`custid`) REFERENCES `customer` (`id`),
-ADD CONSTRAINT `fk_ord_kid` FOREIGN KEY (`kindid`) REFERENCES `kind` (`id`),
-ADD CONSTRAINT `fk_ord_lhubid` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`);
+  ADD CONSTRAINT `fk_ord_agentid` FOREIGN KEY (`agentid`) REFERENCES `agent` (`agid`),
+  ADD CONSTRAINT `fk_ord_custid` FOREIGN KEY (`custid`) REFERENCES `customer` (`id`),
+  ADD CONSTRAINT `fk_ord_kid` FOREIGN KEY (`kindid`) REFERENCES `kind` (`id`),
+  ADD CONSTRAINT `fk_ord_lhubid` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`);
 
 --
 -- 限制表 `product`
 --
 ALTER TABLE `product`
-ADD CONSTRAINT `fk_pro2co_id` FOREIGN KEY (`coursesid`) REFERENCES `adcourses` (`cid`),
-ADD CONSTRAINT `fk_pro2lhub_id` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`);
+  ADD CONSTRAINT `fk_pro2co_id` FOREIGN KEY (`coursesid`) REFERENCES `adcourses` (`cid`),
+  ADD CONSTRAINT `fk_pro2lhub_id` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`);
 
 --
 -- 限制表 `product0examtype`
 --
 ALTER TABLE `product0examtype`
-ADD CONSTRAINT `pe2examtypeid` FOREIGN KEY (`examtypeid`) REFERENCES `examtype` (`id`),
-ADD CONSTRAINT `pe2lhubid` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`),
-ADD CONSTRAINT `pe2productid` FOREIGN KEY (`productid`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `pe2examtypeid` FOREIGN KEY (`examtypeid`) REFERENCES `examtype` (`id`),
+  ADD CONSTRAINT `pe2lhubid` FOREIGN KEY (`lhubid`) REFERENCES `learnhub` (`lhid`),
+  ADD CONSTRAINT `pe2productid` FOREIGN KEY (`productid`) REFERENCES `product` (`id`);
 
 --
 -- 限制表 `recordanswer`
 --
 ALTER TABLE `recordanswer`
-ADD CONSTRAINT `fk_r2e_id` FOREIGN KEY (`examid`) REFERENCES `exam` (`id`);
+  ADD CONSTRAINT `fk_r2e_id` FOREIGN KEY (`examid`) REFERENCES `exam` (`id`);
 
 --
 -- 限制表 `recordques4exam`
 --
 ALTER TABLE `recordques4exam`
-ADD CONSTRAINT `queserr_cust_id` FOREIGN KEY (`customid`) REFERENCES `customer` (`id`),
-ADD CONSTRAINT `queserr_opt_id` FOREIGN KEY (`questionid`) REFERENCES `optquestion` (`optid`);
+  ADD CONSTRAINT `queserr_cust_id` FOREIGN KEY (`customid`) REFERENCES `customer` (`id`),
+  ADD CONSTRAINT `queserr_opt_id` FOREIGN KEY (`questionid`) REFERENCES `optquestion` (`optid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
