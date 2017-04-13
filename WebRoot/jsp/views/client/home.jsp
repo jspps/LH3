@@ -148,14 +148,18 @@
 		function clickPreView() {
 			if (star <= 0)
 				return;
+			star = star - size;
+			end = end - curSize;			
+			
 			if (curSize < size) {
-				end = end - curSize;
 				curSize = size;
 			}
-
-			star = star - size;
+			
 			if (star < 0)
 				star = 0;
+				
+			if(end <= 0)
+				end = curSize;
 
 			showChildsView();
 		}
@@ -204,7 +208,7 @@
 				})), $("<span>").append($("<a>", {
 					"href" : "javascript:void(0);"
 				}).append($("<img>", {
-					"src" : en.imgurl4major
+					"src" : getImgUrl(en.departid,star + i)
 				}))));
 
 				jqRtCont.append(div);
@@ -279,6 +283,44 @@
 			var inpVal = $("#inp_ssk").val();
 			$("#subname").val(inpVal);
 			$("#fm_search_sub").submit();
+		}
+		
+		function getImgUrl(departid,index){
+			var url = "jsp/imgs/couses/";
+			switch (departid) {
+				case 1:
+					url +="education/";
+					break;
+				case 2:
+					url +="vocation/";
+					break;
+				case 3:
+					url +="build/";
+					break;
+				case 4:
+					url +="medicine/";
+					break;
+				case 5:
+					url +="finance/";
+					break;
+				case 6:
+					url +="computer/";
+					break;
+				case 7:
+					url +="foreigntrade/";
+					break;
+				case 8:
+					url +="recruit/";
+					break;
+				default:
+					url +="special/";
+					break;
+			}
+			index++;
+			index %= 8;
+			index = index == 0 ? 8 : index;
+			url +="0"+index+".jpg";
+			return url;
 		}
 	</script>
 </body>
