@@ -32,9 +32,9 @@ public class AdcoursesDAO extends JdbcTemplate {
         return TABLE + DateEx.nowStr5();
     }
 
-    public static String[] carrays ={"cid", "departid", "nmMajor", "nmLevel", "nmSub", "nmArea", "profitAgent", "profitOwner", "deposit", "bonus", "wrong", "program", "art", "status", "createtime", "imgurl4major"};
-    public static String coulmns = "cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major";
-    public static String coulmns2 = "departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major";
+    public static String[] carrays ={"cid", "departid", "nmMajor", "nmLevel", "nmSub", "nmArea", "profitAgent", "profitOwner", "deposit", "bonus", "wrong", "program", "art", "status", "createtime"};
+    public static String coulmns = "cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime";
+    public static String coulmns2 = "departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime";
 
     public AdcoursesDAO(Connection conn) {
         super(conn);
@@ -56,7 +56,7 @@ public class AdcoursesDAO extends JdbcTemplate {
         StringBuffer sql = StringBufPool.borrowObject();
         try {
             adcourses.reset();
-            sql.append("INSERT INTO ").append(TABLENAME2).append(" (departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major) VALUES (:departid, :nmMajor, :nmLevel, :nmSub, :nmArea, :profitAgent, :profitOwner, :deposit, :bonus, :wrong, :program, :art, :status, :createtime, :imgurl4major)");
+            sql.append("INSERT INTO ").append(TABLENAME2).append(" (departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime) VALUES (:departid, :nmMajor, :nmLevel, :nmSub, :nmArea, :profitAgent, :profitOwner, :deposit, :bonus, :wrong, :program, :art, :status, :createtime)");
             Map map = super.insert(sql.toString(), adcourses);
             return getInt(map, "GENERATED_KEY");
         } catch(Exception e) {
@@ -127,7 +127,7 @@ public class AdcoursesDAO extends JdbcTemplate {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
             adcourses.ustr();
-            sql.append("INSERT INTO ").append(TABLENAME2).append(" (cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major) VALUES (:cid, :departid, :nmMajor, :nmLevel, :nmSub, :nmArea, :profitAgent, :profitOwner, :deposit, :bonus, :wrong, :program, :art, :status, :createtime, :imgurl4major)");
+            sql.append("INSERT INTO ").append(TABLENAME2).append(" (cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime) VALUES (:cid, :departid, :nmMajor, :nmLevel, :nmSub, :nmArea, :profitAgent, :profitOwner, :deposit, :bonus, :wrong, :program, :art, :status, :createtime)");
             Map map = super.insert(sql.toString(), adcourses);
             return getInt(map, "GENERATED_KEY");
         } catch(Exception e) {
@@ -146,7 +146,7 @@ public class AdcoursesDAO extends JdbcTemplate {
         StringBuffer sql = StringBufPool.borrowObject();
         try {
             if(adcoursess == null || adcoursess.isEmpty()) return new int[0];
-            sql.append("INSERT INTO ").append(TABLENAME2).append(" (departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major) VALUES (:departid, :nmMajor, :nmLevel, :nmSub, :nmArea, :profitAgent, :profitOwner, :deposit, :bonus, :wrong, :program, :art, :status, :createtime, :imgurl4major)");
+            sql.append("INSERT INTO ").append(TABLENAME2).append(" (departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime) VALUES (:departid, :nmMajor, :nmLevel, :nmSub, :nmArea, :profitAgent, :profitOwner, :deposit, :bonus, :wrong, :program, :art, :status, :createtime)");
             return super.batchInsert(sql.toString(), adcoursess);
          } catch (Exception e) {
              log.info(e2s(e));
@@ -289,7 +289,7 @@ public class AdcoursesDAO extends JdbcTemplate {
     public List<Adcourses> selectAll(final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" ORDER BY cid");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" ORDER BY cid");
             return super.queryForList(sql.toString(), Adcourses.class);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -354,7 +354,7 @@ public class AdcoursesDAO extends JdbcTemplate {
                     sb.append(", ");
             }
             String str = sb.toString();
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" WHERE cid in (").append(str).append(" ) ORDER BY cid");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" WHERE cid in (").append(str).append(" ) ORDER BY cid");
             return super.queryForList(sql.toString(), Adcourses.class);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -381,7 +381,7 @@ public class AdcoursesDAO extends JdbcTemplate {
                     sb.append(", ");
             }
             String str = sb.toString();
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" WHERE cid in ( :str ) ORDER BY cid");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" WHERE cid in ( :str ) ORDER BY cid");
             Map params = newMap();
             params.put("str", str);
             return super.queryForList(sql.toString(), params, Adcourses.class);
@@ -433,7 +433,7 @@ public class AdcoursesDAO extends JdbcTemplate {
     public List<Adcourses> selectLast(final int num, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" ORDER BY cid DESC LIMIT ").append(num).append("");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" ORDER BY cid DESC LIMIT ").append(num).append("");
             return super.queryForList(sql.toString(), Adcourses.class);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -472,7 +472,7 @@ public class AdcoursesDAO extends JdbcTemplate {
     public Adcourses last(final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" ORDER BY cid DESC LIMIT 1");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" ORDER BY cid DESC LIMIT 1");
             return super.queryForObject(sql.toString(), Adcourses.class);
         } catch(Exception e) {
             // log.info(e2s(e));
@@ -489,7 +489,7 @@ public class AdcoursesDAO extends JdbcTemplate {
     public List<Adcourses> selectGtKeyNum(final int cid, final int _num, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" WHERE cid > :cid ORDER BY cid LIMIT ").append(_num).append("");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" WHERE cid > :cid ORDER BY cid LIMIT ").append(_num).append("");
             Map params = newMap();
             params.put("cid", cid);
             return super.queryForList(sql.toString(), params, Adcourses.class);
@@ -508,7 +508,7 @@ public class AdcoursesDAO extends JdbcTemplate {
     public List<Adcourses> selectGtKey(final int cid, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" WHERE cid > :cid ORDER BY cid");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" WHERE cid > :cid ORDER BY cid");
             Map params = newMap();
             params.put("cid", cid);
             return super.queryForList(sql.toString(), params, Adcourses.class);
@@ -551,7 +551,7 @@ public class AdcoursesDAO extends JdbcTemplate {
     public Adcourses selectByKey(final int cid, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" WHERE cid = :cid");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" WHERE cid = :cid");
             Map params = newMap();
             params.put("cid", cid);
             return super.queryForObject(sql.toString(), params, Adcourses.class);
@@ -606,7 +606,7 @@ public class AdcoursesDAO extends JdbcTemplate {
     public List<Adcourses> selectByDepartid(final Integer departid, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" WHERE departid = :departid ORDER BY cid ");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" WHERE departid = :departid ORDER BY cid ");
             Map params = newMap();
             params.put("departid", departid);
             return super.queryForList(sql.toString(), params, Adcourses.class);
@@ -649,7 +649,7 @@ public class AdcoursesDAO extends JdbcTemplate {
     public List<Adcourses> selectPageByDepartid(final Integer departid, final int begin, final int num, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" WHERE departid = :departid ORDER BY cid LIMIT ").append(begin).append(", ").append(num).append("");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" WHERE departid = :departid ORDER BY cid LIMIT ").append(begin).append(", ").append(num).append("");
             Map params = newMap();
             params.put("departid", departid);
             return super.queryForList(sql.toString(), params, Adcourses.class);
@@ -692,7 +692,7 @@ public class AdcoursesDAO extends JdbcTemplate {
     public Adcourses selectByCid(final Integer cid, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" WHERE cid = :cid");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" WHERE cid = :cid");
             Map params = newMap();
             params.put("cid", cid);
             return super.queryForObject(sql.toString(), params, Adcourses.class);
@@ -728,7 +728,7 @@ public class AdcoursesDAO extends JdbcTemplate {
     public List<Adcourses> selectByPage(final int begin, final int num, final String TABLENAME2) {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
-            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major FROM ").append(TABLENAME2).append(" ORDER BY cid LIMIT ").append(begin).append(", ").append(num).append("");
+            sql.append("SELECT cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime FROM ").append(TABLENAME2).append(" ORDER BY cid LIMIT ").append(begin).append(", ").append(num).append("");
             return super.queryForList(sql.toString(), Adcourses.class);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -2137,7 +2137,7 @@ public class AdcoursesDAO extends JdbcTemplate {
         StringBuffer sql = StringBufPool.borrowObject();
         try{
             if(adcoursess == null || adcoursess.isEmpty()) return new int[0];
-            sql.append("UPDATE ").append(TABLENAME2).append(" SET departid=:departid, nmMajor=:nmMajor, nmLevel=:nmLevel, nmSub=:nmSub, nmArea=:nmArea, profitAgent=:profitAgent, profitOwner=:profitOwner, deposit=:deposit, bonus=:bonus, wrong=:wrong, program=:program, art=:art, status=:status, createtime=:createtime, imgurl4major=:imgurl4major WHERE cid=:cid");
+            sql.append("UPDATE ").append(TABLENAME2).append(" SET departid=:departid, nmMajor=:nmMajor, nmLevel=:nmLevel, nmSub=:nmSub, nmArea=:nmArea, profitAgent=:profitAgent, profitOwner=:profitOwner, deposit=:deposit, bonus=:bonus, wrong=:wrong, program=:program, art=:art, status=:status, createtime=:createtime WHERE cid=:cid");
             return super.batchUpdate2(sql.toString(), adcoursess);
         } catch(Exception e) {
             log.info(e2s(e));
@@ -2165,7 +2165,6 @@ public class AdcoursesDAO extends JdbcTemplate {
                 "	`art`  INT(11) NOT NULL," +
                 "	`status`  INT(11) NOT NULL," +
                 "	`createtime`  DATETIME NOT NULL," +
-                "	`imgurl4major`  VARCHAR(128) NOT NULL," +
                 "	PRIMARY KEY (`cid`)," +
                 "	KEY `departid` (`departid`)" +
                 ") ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
@@ -2197,7 +2196,6 @@ public class AdcoursesDAO extends JdbcTemplate {
                 "	`art`  INT(11) NOT NULL," +
                 "	`status`  INT(11) NOT NULL," +
                 "	`createtime`  DATETIME NOT NULL," +
-                "	`imgurl4major`  VARCHAR(128) NOT NULL," +
                 "	PRIMARY KEY (`cid`)," +
                 "	KEY `departid` (`departid`)" +
                 ") ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";

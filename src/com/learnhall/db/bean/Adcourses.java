@@ -22,10 +22,10 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
 
     public static final String primary = "cid";
 
-    public static final class Col { public static final String cid = "cid"; public static final String departid = "departid"; public static final String nmMajor = "nmMajor"; public static final String nmLevel = "nmLevel"; public static final String nmSub = "nmSub"; public static final String nmArea = "nmArea"; public static final String profitAgent = "profitAgent"; public static final String profitOwner = "profitOwner"; public static final String deposit = "deposit"; public static final String bonus = "bonus"; public static final String wrong = "wrong"; public static final String program = "program"; public static final String art = "art"; public static final String status = "status"; public static final String createtime = "createtime"; public static final String imgurl4major = "imgurl4major";  }
-    public static final class CEn { public static final String cid = "cid"; public static final String departid = "departid"; public static final String nmMajor = "nmMajor"; public static final String nmLevel = "nmLevel"; public static final String nmSub = "nmSub"; public static final String nmArea = "nmArea"; public static final String profitAgent = "profitAgent"; public static final String profitOwner = "profitOwner"; public static final String deposit = "deposit"; public static final String bonus = "bonus"; public static final String wrong = "wrong"; public static final String program = "program"; public static final String art = "art"; public static final String status = "status"; public static final String createtime = "createtime"; public static final String imgurl4major = "imgurl4major";  }
-    public static final String[] carrays ={"cid", "departid", "nmMajor", "nmLevel", "nmSub", "nmArea", "profitAgent", "profitOwner", "deposit", "bonus", "wrong", "program", "art", "status", "createtime", "imgurl4major"};
-    public static final String[] dbTypes ={"INT", "INT", "TINYTEXT", "TINYTEXT", "TINYTEXT", "TINYTEXT", "INT", "INT", "INT", "INT", "INT", "INT", "INT", "INT", "DATETIME", "VARCHAR"};
+    public static final class Col { public static final String cid = "cid"; public static final String departid = "departid"; public static final String nmMajor = "nmMajor"; public static final String nmLevel = "nmLevel"; public static final String nmSub = "nmSub"; public static final String nmArea = "nmArea"; public static final String profitAgent = "profitAgent"; public static final String profitOwner = "profitOwner"; public static final String deposit = "deposit"; public static final String bonus = "bonus"; public static final String wrong = "wrong"; public static final String program = "program"; public static final String art = "art"; public static final String status = "status"; public static final String createtime = "createtime";  }
+    public static final class CEn { public static final String cid = "cid"; public static final String departid = "departid"; public static final String nmMajor = "nmMajor"; public static final String nmLevel = "nmLevel"; public static final String nmSub = "nmSub"; public static final String nmArea = "nmArea"; public static final String profitAgent = "profitAgent"; public static final String profitOwner = "profitOwner"; public static final String deposit = "deposit"; public static final String bonus = "bonus"; public static final String wrong = "wrong"; public static final String program = "program"; public static final String art = "art"; public static final String status = "status"; public static final String createtime = "createtime";  }
+    public static final String[] carrays ={"cid", "departid", "nmMajor", "nmLevel", "nmSub", "nmArea", "profitAgent", "profitOwner", "deposit", "bonus", "wrong", "program", "art", "status", "createtime"};
+    public static final String[] dbTypes ={"INT", "INT", "TINYTEXT", "TINYTEXT", "TINYTEXT", "TINYTEXT", "INT", "INT", "INT", "INT", "INT", "INT", "INT", "INT", "DATETIME"};
 
 
     public int cid;
@@ -43,7 +43,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
     public int art;
     public int status;
     public java.util.Date createtime;
-    public String imgurl4major;
 
     @Override
     public String _tableId() {
@@ -402,17 +401,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         return this;
     }
 
-    public String getImgurl4major(){
-        return imgurl4major;
-    }
-
-    public Adcourses setImgurl4major(String imgurl4major){
-        String _old = this.imgurl4major;
-        this.imgurl4major = imgurl4major;
-        changeIt(Col.imgurl4major, _old, imgurl4major);
-        return this;
-    }
-
     public int compareTo(Adcourses v2, String fieldZh) {
         Object o1 = this.value(fieldZh);
         Object o2 = v2.value(fieldZh);
@@ -425,7 +413,7 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         return compareTo(o1, o2);
     }
 
-    public static Adcourses newAdcourses(Integer cid, Integer departid, String nmMajor, String nmLevel, String nmSub, String nmArea, Integer profitAgent, Integer profitOwner, Integer deposit, Integer bonus, Integer wrong, Integer program, Integer art, Integer status, java.util.Date createtime, String imgurl4major) {
+    public static Adcourses newAdcourses(Integer cid, Integer departid, String nmMajor, String nmLevel, String nmSub, String nmArea, Integer profitAgent, Integer profitOwner, Integer deposit, Integer bonus, Integer wrong, Integer program, Integer art, Integer status, java.util.Date createtime) {
         Adcourses result = new Adcourses();
         result.cid = cid;
         result.departid = departid;
@@ -442,7 +430,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         result.art = art;
         result.status = status;
         result.createtime = createtime;
-        result.imgurl4major = imgurl4major;
         return result;
     }
 
@@ -463,7 +450,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         result.art = adcourses.art;
         result.status = adcourses.status;
         result.createtime = adcourses.createtime;
-        result.imgurl4major = adcourses.imgurl4major;
         return result;
     }
 
@@ -492,8 +478,7 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
             int art = 0; 	// art
             int status = 0; 	// status
             Date createtime = new Date(); 	// createtime
-            String imgurl4major = ""; 	// imgurl4major
-            adcourses = Adcourses.newAdcourses(cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime, imgurl4major);
+            adcourses = Adcourses.newAdcourses(cid, departid, nmMajor, nmLevel, nmSub, nmArea, profitAgent, profitOwner, deposit, bonus, wrong, program, art, status, createtime);
         }
         adcourses = adcourses.insert();
 
@@ -512,7 +497,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         int art = adcourses.getArt(); 	// art
         int status = adcourses.getStatus(); 	// status
         Date createtime = adcourses.getCreatetime(); 	// createtime
-        String imgurl4major = adcourses.getImgurl4major(); 	// imgurl4major
     }
     */
 
@@ -683,8 +667,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
             return nmSub;
         case CEn.nmArea: 
             return nmArea;
-        case CEn.imgurl4major: 
-            return imgurl4major;
         }
         return "";
     }
@@ -735,8 +717,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
             return status;
         case CEn.createtime:
             return createtime;
-        case CEn.imgurl4major:
-            return imgurl4major;
         }
         return null;
     }
@@ -766,8 +746,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
             return setNmSub(value2);
         case CEn.nmArea:
             return setNmArea(value2);
-        case CEn.imgurl4major:
-            return setImgurl4major(value2);
         }
         // throw new IOException("fieldEn:" + fieldEn + " Not Found.");
         return this;
@@ -807,7 +785,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         result.put("art", art);
         result.put("status", status);
         result.put("createtime", createtime);
-        result.put("imgurl4major", imgurl4major);
         return result;
     }
 
@@ -828,7 +805,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         result.put("art", art);
         result.put("status", status);
         result.put("createtime", createtime);
-        result.put("imgurl4major", imgurl4major);
         return result;
     }
 
@@ -851,7 +827,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         result.put("art", art);
         result.put("status", status);
         result.put("createtime", createtime);
-        result.put("imgurl4major", imgurl4major);
         return result;
     }
 
@@ -871,7 +846,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         Integer art = MapEx.getInt(e, "art");
         Integer status = MapEx.getInt(e, "status");
         java.util.Date createtime = MapEx.getDate(e, "createtime");
-        String imgurl4major = MapEx.getString(e, "imgurl4major");
 
         if(cid == null) cid = 0;
         if(departid == null) departid = 0;
@@ -888,7 +862,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         if(art == null) art = 0;
         if(status == null) status = 0;
         if(createtime == null) createtime = new java.util.Date();
-        if(imgurl4major == null) imgurl4major = "";
 
         setCid(cid);
         setDepartid(departid);
@@ -905,7 +878,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         setArt(art);
         setStatus(status);
         setCreatetime(createtime);
-        setImgurl4major(imgurl4major);
 
         return this;
     }
@@ -928,7 +900,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         Integer art = MapEx.getInt(e, "art");
         Integer status = MapEx.getInt(e, "status");
         java.util.Date createtime = MapEx.getDate(e, "createtime");
-        String imgurl4major = MapEx.getString(e, "imgurl4major");
 
         if(cid == null) cid = 0;
         if(departid == null) departid = 0;
@@ -945,7 +916,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         if(art == null) art = 0;
         if(status == null) status = 0;
         if(createtime == null) createtime = new java.util.Date();
-        if(imgurl4major == null) imgurl4major = "";
 
         result.cid = cid;
         result.departid = departid;
@@ -962,7 +932,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         result.art = art;
         result.status = status;
         result.createtime = createtime;
-        result.imgurl4major = imgurl4major;
 
         return result;
     }
@@ -985,7 +954,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         Integer art = MapEx.getInt(e, "art");
         Integer status = MapEx.getInt(e, "status");
         java.util.Date createtime = MapEx.getDate(e, "createtime");
-        String imgurl4major = MapEx.getString(e, "imgurl4major");
 
         if(cid == null) cid = 0;
         if(departid == null) departid = 0;
@@ -1002,7 +970,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         if(art == null) art = 0;
         if(status == null) status = 0;
         if(createtime == null) createtime = new java.util.Date();
-        if(imgurl4major == null) imgurl4major = "";
 
         result.cid = cid;
         result.departid = departid;
@@ -1019,7 +986,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
         result.art = art;
         result.status = status;
         result.createtime = createtime;
-        result.imgurl4major = imgurl4major;
 
         return result;
     }
@@ -1039,7 +1005,7 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
 
     public byte[] toBytes() throws Exception {
         try (ByteOutStream out = getStream();) {
-            writeMapTag(out, 16);
+            writeMapTag(out, 15);
             writeMapEntry(out, "cid", cid);
             writeMapEntry(out, "departid", departid);
             writeMapEntry(out, "nmMajor", nmMajor);
@@ -1055,7 +1021,6 @@ public class Adcourses extends com.bowlong.sql.mysql.BeanSupport {
             writeMapEntry(out, "art", art);
             writeMapEntry(out, "status", status);
             writeMapEntry(out, "createtime", createtime);
-            writeMapEntry(out, "imgurl4major", imgurl4major);
             return out.toByteArray();
         } catch (Exception e) {
             throw e;
