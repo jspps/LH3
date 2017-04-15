@@ -82,12 +82,12 @@ public class AdcoursesEntity extends AdcoursesInternal {
 		AdcoursesDAO DAO = AdcoursesDAO();
 		PStr pStr = PStr.b();
 		String sql = "";
-		pStr.a("SELECT imgurl4major,nmMajor FROM ", DAO.TABLENAME,
+		pStr.a("SELECT nmMajor FROM ", DAO.TABLENAME,
 				" WHERE 1 = 1 ");
 		if (departid > 0) {
 			pStr.a(" AND departid = ", departid);
 		}
-		pStr.a(" GROUP BY nmMajor,imgurl4major,createtime ");
+		pStr.a(" GROUP BY nmMajor,createtime ");
 		pStr.a(" ORDER BY createtime DESC ");
 		List<Map> result = new ArrayList<Map>();
 		try {
@@ -107,13 +107,13 @@ public class AdcoursesEntity extends AdcoursesInternal {
 		AdcoursesDAO DAO = AdcoursesDAO();
 		PStr pStr = PStr.b();
 		String sql = "";
-		pStr.a("SELECT imgurl4major,nmMajor FROM ", DAO.TABLENAME,
+		pStr.a("SELECT nmMajor FROM ", DAO.TABLENAME,
 				" WHERE 1 = 1 ");
 		if (!StrEx.isEmptyTrim(nmMajor)) {
 			pStr.a(" AND nmMajor like '%", nmMajor, "%'");
 		}
 
-		pStr.a(" GROUP BY nmMajor,imgurl4major ");
+		pStr.a(" GROUP BY nmMajor ");
 		pStr.a(" ORDER BY createtime DESC ");
 		List<Map> result = new ArrayList<Map>();
 		try {
@@ -314,32 +314,6 @@ public class AdcoursesEntity extends AdcoursesInternal {
 		} catch (Exception e) {
 		}
 		return null;
-	}
-
-	public static String getImg4NmMajor(int departid, String nmmajor) {
-		AdcoursesDAO DAO = AdcoursesDAO();
-		PStr pStr = PStr.b();
-		String sql = "";
-		pStr.a("SELECT imgurl4major FROM ", DAO.TABLENAME, " WHERE 1 = 1 ");
-		if (departid > 0) {
-			pStr.a(" AND departid = ", departid);
-		}
-		if (!StrEx.isEmptyTrim(nmmajor)) {
-			pStr.a(" AND nmMajor = '", nmmajor + "'");
-		}
-		pStr.a(" ORDER BY createtime DESC ");
-		pStr.a(" LIMIT 0,1 ");
-		try {
-			sql = pStr.e();
-			List<Map> list = DAO.queryForList(sql);
-			if (!ListEx.isEmpty(list)) {
-				Map v = list.get(0);
-				return MapEx.getString(v, "imgurl4major");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "";
 	}
 	// types end
 

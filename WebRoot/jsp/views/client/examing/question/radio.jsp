@@ -70,30 +70,30 @@
 <div class="tymk_right_wb" style="margin-top: 25px;">
 	<span class="tymk_right_xx">
 		<label style="float:left; margin-right:20px;">
-        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">A</span> <input type="radio" class="tymk_right_xx_radio" value="A"  style="width:18px; float:left; height:18px;"/> 
+        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">A</span> <input type="radio" class="tymk_right_xx_radio" value="A"  style="width:18px; float:left; height:18px;" name="answer"/> 
         </label>
         <label style="float:left; margin-right:20px;">
-        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">B</span> <input type="radio" class="tymk_right_xx_radio" value="B"  style="width:18px; float:left; height:18px;"/> 
+        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">B</span> <input type="radio" class="tymk_right_xx_radio" value="B"  style="width:18px; float:left; height:18px;" name="answer"/> 
         </label>
         <label style="float:left; margin-right:20px;">
-        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">C</span> <input type="radio" class="tymk_right_xx_radio" value="C"  style="width:18px; float:left; height:18px;"/> 
+        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">C</span> <input type="radio" class="tymk_right_xx_radio" value="C"  style="width:18px; float:left; height:18px;" name="answer"/> 
         </label>
         <label style="float:left; margin-right:20px;">
-        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">D</span> <input type="radio" class="tymk_right_xx_radio" value="D"  style="width:18px; float:left; height:18px;"/> 
+        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">D</span> <input type="radio" class="tymk_right_xx_radio" value="D"  style="width:18px; float:left; height:18px;" name="answer"/> 
         </label>
         <c:if test="${curOpt.answernum >= 5}">
 			<label style="float:left; margin-right:20px;">
-	        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">E</span> <input type="radio" class="tymk_right_xx_radio" value="E"  style="width:18px; float:left; height:18px;"/> 
+	        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">E</span> <input type="radio" class="tymk_right_xx_radio" value="E"  style="width:18px; float:left; height:18px;" name="answer"/> 
 	        </label>
 		</c:if> 
 		<c:if test="${curOpt.answernum >= 6}">
 		 	<label style="float:left; margin-right:20px;">
-	        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">F</span> <input type="radio" class="tymk_right_xx_radio" value="F"  style="width:18px; float:left; height:18px;"/> 
+	        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">F</span> <input type="radio" class="tymk_right_xx_radio" value="F"  style="width:18px; float:left; height:18px;" name="answer"/> 
 	        </label>
 		</c:if> 
 		<c:if test="${curOpt.answernum >= 7}">
 		 	<label style="float:left; margin-right:20px;">
-	        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">G</span> <input type="radio" class="tymk_right_xx_radio" value="G"  style="width:18px; float:left; height:18px;"/> 
+	        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">G</span> <input type="radio" class="tymk_right_xx_radio" value="G"  style="width:18px; float:left; height:18px;" name="answer"/> 
 	        </label>
 		</c:if>
 	</span> 
