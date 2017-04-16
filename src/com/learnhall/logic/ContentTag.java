@@ -27,12 +27,17 @@ public class ContentTag extends TagSupport {
 	public int doStartTag() throws JspException {
 
 		try {
-			int indP = content.indexOf("<p>");
+			int indP = content.indexOf("<p");
 			String v = content;
-			if (indP == 0)
-				v = content.substring(0, indP + 3) + index + "."
-						+ content.substring(indP + 3);
-			pageContext.getOut().write(index + "." + v);
+			if (indP == 0){
+				int indEnd = content.indexOf(">");
+				indEnd += indP + 1;
+				v = content.substring(0, indEnd) + index + "."
+						+ content.substring(indEnd);
+			}else{
+				v = index + "." + content;
+			}
+			pageContext.getOut().write(v);
 		} catch (Exception e) {
 		}
 		return super.doStartTag();
