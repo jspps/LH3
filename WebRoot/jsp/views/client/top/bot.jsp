@@ -35,9 +35,14 @@
 				<!-- 
 					<img src="jsp/imgs/client/30.jpg" />
 				 -->
-				<img  src="getQRCode" width="68" height="68"/>
+				<img width="68" height="68" id="qrcode_img"/>
 			</div>
 		</div>
 		<div class="dh_div_bottom">成都尚学在线网络科技有限公司版权所有&nbsp;&nbsp;&nbsp;蜀ICP备15011601</div>
 	</div>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#qrcode_img").attr("src","getQRCode");
+});
+</script>

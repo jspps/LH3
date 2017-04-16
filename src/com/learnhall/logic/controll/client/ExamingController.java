@@ -356,7 +356,11 @@ public class ExamingController {
 				viewCurOpt = mapQues.get(curOptId);
 			}
 		}
-		modelMap.addAttribute("curOpt", viewCurOpt);
+		
+		Map oneQuest = viewCurOpt.toBasicMap();
+		oneQuest.put("isOldContent",viewCurOpt.getContent().indexOf("<p>") == -1);
+		
+		modelMap.addAttribute("curOpt", oneQuest);
 		modelMap.addAttribute("isOver", isMax ? 0 : 1);
 		modelMap.addAttribute("curExamLen", maxLen);
 

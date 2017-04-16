@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="/tags" prefix="tag"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -11,7 +12,14 @@
 	<!-- <span class="tymk_right_nr_title">五、简答题</span>  -->
 	<span class="tymk_right_nr_title" style="display: block;height:auto;line-height: 24px;">${examcatalog.serial} ${examcatalog.title }</span>
 	<span class="tymk_right_nr_tm" style="font-size: 14px;">
+		<c:choose>
+		<c:when test="${curOpt.isOldContent }">
 		<pre>${num}.${curOpt.content}</pre>
+		</c:when>
+		<c:otherwise>
+		<tag:content index="${num}" content="${curOpt.content}"></tag:content>
+		</c:otherwise>
+		</c:choose>
 		<c:if test="${curOpt.imgPic != ''}">
 		<img src="${curOpt.imgPic}" />
 		</c:if>
