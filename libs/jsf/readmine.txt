@@ -1,0 +1,4 @@
+具体在什么地方用到，服务器上以前LH版本的lib里面有
+
+jsf-api.jar是JSF规范的api，
+jsf-impl.jar是Sun为JSF规范提供的JSF RI实现。
