@@ -20,9 +20,11 @@ import com.learnhall.db.bean.Boughtkinds;
 import com.learnhall.db.bean.Customer;
 import com.learnhall.db.bean.Exam;
 import com.learnhall.db.bean.Kind;
+import com.learnhall.db.bean.Learnhub;
 import com.learnhall.db.bean.Openkind4customer;
 import com.learnhall.db.entity.BoughtkindsEntity;
 import com.learnhall.db.entity.KindEntity;
+import com.learnhall.db.entity.LearnhubEntity;
 import com.learnhall.db.entity.Openkind4customerEntity;
 import com.learnhall.logic.SessionKeys;
 import com.learnhall.logic.Utls;
@@ -244,6 +246,39 @@ public class KExamController {
 
 		Utls.setUrlPre(session, "/client/winTopics");
 		return "client/kexam/winTopics";
+	}
+	
+	/*** 打印界面 **/
+	@RequestMapping("/printView")
+	public String printView(HttpServletRequest request,
+			HttpServletResponse response, ModelMap modelMap, HttpSession session)
+			throws Exception {
+		
+		PageKExam pageExam = initPageKExam(request, session, false);
+		if (pageExam.kind == null)
+			return "redirect:home";
+		
+		Map map = Svc.getMapAllParams(request);
+		
+		int examid = MapEx.getInt(map, "unqid");
+		Exam en = pageExam.getExam(examid);
+		if (en == null) {
+			return "redirect:home";
+		}
+		
+		Learnhub lhub = LearnhubEntity.getByKey(en.getLhubid());
+		modelMap.addAttribute("exam", en);
+		modelMap.addAttribute("lhub", lhub);
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("examid", "=" + examid);
+		params.put("status", "!= 1");
+		params.put("parentid", "= 0");
+		int lens = ExamCatalogAndListQuestion.getExamCatalogs(en, modelMap);
+		modelMap.addAttribute("lens", lens);
+		
+		modelMap.addAttribute("details", ExamCatalogAndListQuestion.getExamDetailsByExamid(examid));
+		return "client/printView";
 	}
 
 }

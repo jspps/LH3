@@ -34,6 +34,10 @@
 		$("#examid").val(examid);
 		$("#fm_examId").submit();
 	};
+	
+	function OnClickPrintView(id){
+		$("#fm_printView_"+id).submit();
+	};
 </script>
 
 <!--
@@ -71,6 +75,14 @@
 			                    <span class="mk_jsyt_list_div">我的分数：<label style="color:#0060ff;">未做</label></span>
 			                    <span class="mk_jsyt_list_div">正确率：<label style="color:#0060ff;">未做</label></span>
 			                     -->
+			                     <c:if test="${isBuy == true}">
+								 <div class="mk_lnzt_list" style="margin: 10px 0 0 88px;cursor: pointer;padding-left:0;">
+									<a class="a_add" href="javascript:OnClickPrintView(${item.id});">打印试卷</a>
+									<form action="client/printView" name="fm_printView" id="fm_printView_${item.id}" method="post" target="_blank">
+									<input name="unqid" value="${item.id}" type="hidden" />
+									</form>
+								</div>
+								</c:if>
 			                </div>
 			                <div class="mk_jsyt_bottom" onmouseout="this.className='mk_jsyt_bottom'" onmouseover="this.className='mk_jsyt_bottom_hover'" onclick="intoExamRoom(${item.id})">进入考场</div>
 						</div>
