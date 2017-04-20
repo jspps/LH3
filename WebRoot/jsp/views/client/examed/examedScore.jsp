@@ -104,6 +104,15 @@
 				onmouseout="this.className='mk_tims_bottom_a'"
 				onmouseover="this.className='mk_tims_bottom_a_hover'"
 				onclick="click2ReExaming();">再考一次</div>
+			<div class="mk_tims_bottom_a"
+				onmouseout="this.className='mk_tims_bottom_a'"
+				onmouseover="this.className='mk_tims_bottom_a_hover'"
+				onclick="OnClickPrintView(${examed.id});">
+				<span>打印试卷</span>
+				<form action="client/printView" name="fm_printView" id="fm_printView_${examed.id}" method="post" target="_blank">
+				<input name="unqid" value="${examed.id}" type="hidden" />
+				</form>
+			</div>
 		</div>
 		<div class="cjtj_nr_buttom"></div>
 		<div style="clear:both;"></div>
@@ -123,6 +132,9 @@
 		};
 		function click2DoNewExam(){
 			window.location.href = '<%=basePath%>'+"client/reExaming";
+		};
+		function OnClickPrintView(id){
+			$("#fm_printView_"+id).submit();
 		};
 	</script>
 </body>

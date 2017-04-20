@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bowlong.lang.StrEx;
 import com.bowlong.util.MapEx;
+import com.learnhall.enums.ExamEnum;
 import com.learnhall.logic.Utls;
 
 /**
@@ -28,7 +29,7 @@ public class ExamedController {
 	@RequestMapping("/seeAnswer4ITMS")
 	public String seeAnswer4ITMS(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session, ModelMap modelMap) {
-		ExamingController.initQues(session, modelMap, 2, 0, 10);
+		ExamingController.initQues(session, modelMap, ExamEnum.SeeAnswer, 0, 10);
 		modelMap.addAttribute("see_dj", "1");
 		return "client/examed/examed4ITMS";
 	}
@@ -38,7 +39,7 @@ public class ExamedController {
 	public String seeAnswer(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session, ModelMap modelMap) {
 		boolean isInitExam = ExamingController.initExam(request, session,
-				modelMap, 2);
+				modelMap, ExamEnum.SeeAnswer);
 		if (!isInitExam)
 			return "redirect:home";
 

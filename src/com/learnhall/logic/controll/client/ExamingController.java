@@ -41,6 +41,7 @@ import com.learnhall.db.entity.OptquestionEntity;
 import com.learnhall.db.entity.ProductEntity;
 import com.learnhall.db.entity.RecordanswerEntity;
 import com.learnhall.db.entity.Recordques4examEntity;
+import com.learnhall.enums.ExamEnum;
 import com.learnhall.logic.SessionKeys;
 import com.learnhall.logic.Utls;
 import com.learnhall.logic.model.PageKExam;
@@ -147,7 +148,7 @@ public class ExamingController {
 
 	/*** [examType:1考试,2查看答卷] **/
 	static public boolean initExam(HttpServletRequest request,
-			HttpSession session, ModelMap modelMap, int examType) {
+			HttpSession session, ModelMap modelMap, ExamEnum examType) {
 		Map map = Svc.getMapAllParams(request);
 		int examid = MapEx.getInt(map, "examid");
 		int preExamId = 0;
@@ -178,9 +179,9 @@ public class ExamingController {
 
 	/*** 初始化试卷[examType:1考试,2查看答卷,3ITMS,4重做exam的错题] **/
 	static public boolean initQues(HttpSession session, ModelMap modelMap,
-			int examType, int examid, int examTime) {
+			ExamEnum examType, int examid, int examTime) {
 
-		if (examType == 1) {
+		if (examType == ExamEnum.Exam) {
 			removeSesesion4Exam(session);
 		}
 
@@ -200,7 +201,7 @@ public class ExamingController {
 			mapExamCatalogs = MapEx.clear4MapKV(mapExamCatalogs);
 			mapQues = MapEx.clear4MapKV(mapQues);
 		} else {
-			if (examType == 4) {
+			if (examType == ExamEnum.ExamWrong) {
 				listQues = new ArrayList<Optquestion>();
 				Map<Integer, Integer> mapScore = getMapScore4Exam(session);
 				for (Entry<Integer, Integer> entry : mapScore.entrySet()) {
@@ -237,6 +238,7 @@ public class ExamingController {
 			int examcatalogid = en.getExamcatalogid();
 			Map<String, Object> mapLeft = new HashMap<String, Object>();
 			mapLeft.put("type", en.getType());
+			mapLeft.put("gid", en.getGid());
 			mapLeft.put("examcatalogid", examcatalogid);
 			mapLeft.put("optid", en.getOptid());
 			Examcatalog ecatalog = null;
@@ -289,7 +291,7 @@ public class ExamingController {
 		String v = "{}";
 		String score4exam = "{}";
 		try {
-			if (examType == 2) {
+			if (examType == ExamEnum.SeeAnswer) {
 				Map<Integer, String> mapdate = getMapAnswers(session);
 				Map<Integer, Integer> mapscore = getMapScore4Exam(session);
 				int custid = Utls.getCustomerId(session);
@@ -375,7 +377,7 @@ public class ExamingController {
 	@RequestMapping("/examing")
 	public String examing(HttpServletRequest request, HttpSession session,
 			ModelMap modelMap) {
-		boolean isInitExam = initExam(request, session, modelMap, 1);
+		boolean isInitExam = initExam(request, session, modelMap, ExamEnum.Exam);
 		if (!isInitExam)
 			return "redirect:home";
 
@@ -1077,7 +1079,7 @@ public class ExamingController {
 		String name = exam.getName();
 		name = PStr.str(name, ":错题重做");
 		modelMap.addAttribute("name", name);
-		initQues(session, modelMap, 4, examid, examTime);
+		initQues(session, modelMap, ExamEnum.ExamWrong, examid, examTime);
 		return "client/examing/examing";
 	}
 

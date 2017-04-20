@@ -22,6 +22,7 @@
 		<c:forEach items="${listLeft}" var="ent" varStatus="status">			
 			<c:if test="${!sessionScope.IsTestExam || (sessionScope.IsTestExam && (num < 6)) }">
 			<c:set var="isShowTit" value="false"></c:set>
+			<c:set var="gType" value="${ent.type}"></c:set>
 			
 			<c:choose>
 			<c:when test="${ent.type==1 && radio4left != ent.examcatalogid}">
@@ -48,9 +49,12 @@
 				<c:set var="lunsu4left" value="${ent.examcatalogid}"></c:set>
 				<c:set var="isShowTit" value="true"></c:set>
 			</c:when>
-			<c:when test="${ent.type==7 && anlifx4left != ent.examcatalogid}">
-				<c:set var="anlifx4left" value="${ent.examcatalogid}"></c:set>
-				<c:set var="isShowTit" value="true"></c:set>				
+			<c:when test="${ent.type==7}">
+				<c:set var="gType" value="${ent.gid}"></c:set>
+				<c:if test="${anlifx4left != ent.examcatalogid}">
+					<c:set var="anlifx4left" value="${ent.examcatalogid}"></c:set>
+					<c:set var="isShowTit" value="true"></c:set>				
+				</c:if>
 			</c:when>
 			<c:otherwise></c:otherwise>
 			</c:choose>
@@ -60,7 +64,7 @@
 			</c:if>
 			
 			<span id="tymk_zt_div_${ent.optid}" npid='${ent.optid}'
-				onclick="hrefUrl('${num}','${ent.optid}','${ent.type}',false,true);"
+				onclick="hrefUrl('${num}','${ent.optid}','${gType}',false,true);"
 				class="tymk_list_ts_wd">${num}</span>
 			<c:set var="num" value="${num + 1}"></c:set>
 			</c:if>

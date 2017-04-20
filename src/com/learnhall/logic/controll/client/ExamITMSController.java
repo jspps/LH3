@@ -19,6 +19,7 @@ import com.learnhall.db.bean.Itms4auto;
 import com.learnhall.db.bean.Optquestion;
 import com.learnhall.db.entity.RecordanswerEntity;
 import com.learnhall.db.entity.Recordques4examEntity;
+import com.learnhall.enums.ExamEnum;
 import com.learnhall.logic.SessionKeys;
 import com.learnhall.logic.Utls;
 import com.learnhall.logic.model.KExamITMS;
@@ -208,7 +209,7 @@ public class ExamITMSController {
 		Map<Integer, Examcatalog> mapExamCatalogs = examITMS.kindExams.mapCatalog;
 		session.setAttribute(SessionKeys.MapQuestions, mapQues);
 		session.setAttribute(SessionKeys.MapExamCatalog, mapExamCatalogs);
-		ExamingController.initQues(session, modelMap, 3, 0, 10);
+		ExamingController.initQues(session, modelMap, ExamEnum.ExamITMS, 0, 10);
 		modelMap.addAttribute("name", "ITMS考试");
 		modelMap.addAttribute("isITMS", true);
 		return "client/examing/examing4ITMS";

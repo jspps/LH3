@@ -90,6 +90,9 @@
 			if(!isAnswer){
 				curOptid = $("#curOptId").val();
 				curType = $("#curOptType").val();
+				if(curType == "7"){
+					curType = $("#curOptGid").val();	
+				}
 				isAnswer = true;
 			}
 			
@@ -135,6 +138,10 @@
 					break;
 				case 5:
 					// 简答题答案
+					datedaan = $(".jiandadaan").val();
+					break;
+				case 6:
+					// 论述题答案
 					datedaan = $(".jiandadaan").val();
 					break;
 			};

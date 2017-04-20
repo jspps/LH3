@@ -53,6 +53,7 @@
 
 <input type="hidden" id="curOptId" value="${curOpt.optid}" />
 <input type="hidden" id="curOptType" value="${curOpt.type}" />
+<input type="hidden" id="curOptGid" value="${curOpt.gid}" />
 
 <script type="text/javascript">
 	mapAnswer = ${json};
@@ -95,8 +96,6 @@
 		getCostKbiHtml();
 	};
 	
-	
-		
 	// 弹出我要提问界面
 	function getPutQuesHtml(questid){
 		var blStr = "${sessionScope.Customer != null}";

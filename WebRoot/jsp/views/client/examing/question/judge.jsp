@@ -8,6 +8,14 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+<c:choose>
+<c:when test="${curOpt.type != 7}">
+	<c:set var="gType" value="${curOpt.type}"></c:set>
+</c:when>
+<c:otherwise>
+	<c:set var="gType" value="${curOpt.gid}"></c:set>
+</c:otherwise>
+</c:choose>
 <div class="tymk_right_djjx" style="overflow-x:hidden;">
 	<!-- <span class="tymk_right_nr_title">三、判断题</span> -->
 	<span class="tymk_right_nr_title" style="display: block;height:auto;line-height: 24px;">${examcatalog.serial} ${examcatalog.title }</span>
@@ -59,8 +67,8 @@
 	<span class="mk_ctxl_list_cs" style="margin-top:9px; width:auto; margin-right:40px; padding-left:0px;">
 		<label class="mk_ctxt_cs_text" style="color:#F00; float:left;">得分：20分</label>
 	</span>
-	
-	<span onclick="hrefUrl('${num+1}','${curOpt.optid}','${curOpt.type}');" class="tymk_right_bottom" onmouseout="this.classNma='tymk_right_bottom'" onmouseover="this.calssName='tymk_right_bottom_hover'">
+
+	<span onclick="hrefUrl('${num+1}','${curOpt.optid}','${gType}');" class="tymk_right_bottom" onmouseout="this.classNma='tymk_right_bottom'" onmouseover="this.calssName='tymk_right_bottom_hover'">
 		<c:choose>
 			<c:when test="${isOver != 0}">下一题</c:when>
 			<c:otherwise>完成</c:otherwise>
@@ -78,16 +86,16 @@
 <div class="tymk_right_wb" style="margin-top: 25px;">
 	<span class="tymk_right_xx"> 
 		<label style="float:left; margin-right:20px;">
-        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">对</span> <input type="radio" class="tymk_right_xx_panduan" value="A"  style="width:18px; float:left; height:18px;"/> 
+        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">对</span> <input type="radio" class="tymk_right_xx_panduan" value="A"  style="width:18px; float:left; height:18px;" name="answer"/> 
         </label>
         <label style="float:left; margin-right:20px;">
-        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">错</span> <input type="radio" class="tymk_right_xx_panduan" value="B"  style="width:18px; float:left; height:18px;"/> 
+        	<span style="font-size:20px; float:left; margin:0px 10px 0px 0px;">错</span> <input type="radio" class="tymk_right_xx_panduan" value="B"  style="width:18px; float:left; height:18px;" name="answer"/> 
         </label>
 	</span> 
 	<span class="tymk_right_bottom"
 		onmouseout="this.classNma='tymk_right_bottom'"
 		onmouseover="this.calssName='tymk_right_bottom_hover'"
-		onclick="hrefUrl('${num+1}','${curOpt.optid}','${curOpt.type}',true);">
+		onclick="hrefUrl('${num+1}','${curOpt.optid}','${gType}',true);">
 	<c:choose>
 		<c:when test="${isOver != 0}">下一题</c:when>
 		<c:otherwise>完成</c:otherwise>
