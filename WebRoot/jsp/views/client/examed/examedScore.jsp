@@ -88,7 +88,7 @@
 				<span class="cjtj_list_df">【得分${jugdeScoreRight }分】</span>
 			</div>
 			 -->
-			<div class="mk_tims_bottom_a_hover" style="margin-left:140px;"
+			<div class="mk_tims_bottom_a_hover" style="margin-left:55px;"
 				onmouseout="this.className='mk_tims_bottom_a_hover'"
 				onmouseover="this.className='mk_tims_bottom_a'"
 				onclick="click2SeeAnswer();">查看答卷</div>
@@ -107,10 +107,11 @@
 			<div class="mk_tims_bottom_a"
 				onmouseout="this.className='mk_tims_bottom_a'"
 				onmouseover="this.className='mk_tims_bottom_a_hover'"
-				onclick="OnClickPrintView(${examed.id});">
+				onclick="OnClickPrintView(${examed.examid});">
 				<span>打印试卷</span>
-				<form action="client/printView" name="fm_printView" id="fm_printView_${examed.id}" method="post" target="_blank">
-				<input name="unqid" value="${examed.id}" type="hidden" />
+				<form action="client/printView" name="fm_printView" id="fm_printView_${examed.examid}" method="post" target="_blank">
+				<input name="unqid" value="${examed.examid}" type="hidden" />
+				<input name="answerid" value="${examed.id}" type="hidden" />
 				</form>
 			</div>
 		</div>

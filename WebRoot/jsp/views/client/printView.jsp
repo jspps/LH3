@@ -183,11 +183,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="result-box">
 			<span class="l">
 				<i class="">答题结果：</i>
-				<em class="error">A 【错误】</em>
+				<em class="error">
+				<tag:map key="${child.optid}" data="${answers }" defVal="未答"></tag:map>
+				</em>
 			</span>
 			<span>
 				<i class="">得分：</i>
-				<em class="error">【0分】</em>
+				<em class="error">【<tag:map key="${child.optid}" data="${scores }" defVal="0"></tag:map>分】</em>
 			</span>
 		</div>
 
@@ -220,7 +222,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		isShow = !!isShow;
 		if(isShow){
 			$(".answer-box").show();
-			// $(".result-box").show();
+			var isShowAnswer = ${isShowAnswer};
+			if(isShowAnswer)
+				$(".result-box").show();
 			$(".analysis").show();
 		}else{
 			$(".answer-box").hide();

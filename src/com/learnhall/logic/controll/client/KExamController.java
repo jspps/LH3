@@ -22,10 +22,12 @@ import com.learnhall.db.bean.Exam;
 import com.learnhall.db.bean.Kind;
 import com.learnhall.db.bean.Learnhub;
 import com.learnhall.db.bean.Openkind4customer;
+import com.learnhall.db.bean.Recordanswer;
 import com.learnhall.db.entity.BoughtkindsEntity;
 import com.learnhall.db.entity.KindEntity;
 import com.learnhall.db.entity.LearnhubEntity;
 import com.learnhall.db.entity.Openkind4customerEntity;
+import com.learnhall.db.entity.RecordanswerEntity;
 import com.learnhall.logic.SessionKeys;
 import com.learnhall.logic.Utls;
 import com.learnhall.logic.model.PageKExam;
@@ -67,7 +69,7 @@ public class KExamController {
 		}
 
 		Kind kind = pageExam.kind;
-		
+
 		boolean isReLoadKind = (kind == null && kindId > 0)
 				|| (kind != null && kindId != kind.getId());
 
@@ -247,37 +249,70 @@ public class KExamController {
 		Utls.setUrlPre(session, "/client/winTopics");
 		return "client/kexam/winTopics";
 	}
-	
+
 	/*** 打印界面 **/
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/printView")
 	public String printView(HttpServletRequest request,
 			HttpServletResponse response, ModelMap modelMap, HttpSession session)
 			throws Exception {
-		
+
 		PageKExam pageExam = initPageKExam(request, session, false);
 		if (pageExam.kind == null)
 			return "redirect:home";
-		
+
 		Map map = Svc.getMapAllParams(request);
-		
+
 		int examid = MapEx.getInt(map, "unqid");
 		Exam en = pageExam.getExam(examid);
 		if (en == null) {
 			return "redirect:home";
 		}
-		
+
 		Learnhub lhub = LearnhubEntity.getByKey(en.getLhubid());
 		modelMap.addAttribute("exam", en);
 		modelMap.addAttribute("lhub", lhub);
-		
+
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("examid", "=" + examid);
 		params.put("status", "!= 1");
 		params.put("parentid", "= 0");
 		int lens = ExamCatalogAndListQuestion.getExamCatalogs(en, modelMap);
 		modelMap.addAttribute("lens", lens);
+
+		modelMap.addAttribute("details",
+				ExamCatalogAndListQuestion.getExamDetailsByExamid(examid));
+
+		// 试卷答案
+		int answerid = MapEx.getInt(map, "answerid");
+		boolean isShowAnswer = answerid > 0;
+		if (isShowAnswer) {
+			Map<Integer, String> mapAnwer = null;
+			Map<Integer, Integer> mapScore = null;
+			int custid = Utls.getCustomerId(session);
+			Recordanswer recordanswer = (Recordanswer) session
+					.getAttribute(SessionKeys.CurExamRecord);
+			if (recordanswer == null) {
+				recordanswer = RecordanswerEntity.getByKey(answerid);
+			}
+			if (recordanswer != null && examid == recordanswer.getExamid()
+					&& custid == recordanswer.getCustomerid()) {
+				mapAnwer = Utls.bytes2Map(recordanswer.getAnwers());
+				mapScore = Utls.bytes2Map(recordanswer.getScore4ques());
+			}
+
+			if (mapAnwer == null)
+				mapAnwer = new HashMap<Integer, String>();
+			
+			modelMap.addAttribute("answers", mapAnwer);
+			
+			if (mapScore == null)
+				mapScore = new HashMap<Integer, Integer>();
+			
+			modelMap.addAttribute("scores", mapScore);
+		}
 		
-		modelMap.addAttribute("details", ExamCatalogAndListQuestion.getExamDetailsByExamid(examid));
+		modelMap.addAttribute("isShowAnswer", isShowAnswer);
 		return "client/printView";
 	}
 
