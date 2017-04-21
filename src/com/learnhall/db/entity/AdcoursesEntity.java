@@ -82,6 +82,7 @@ public class AdcoursesEntity extends AdcoursesInternal {
 		AdcoursesDAO DAO = AdcoursesDAO();
 		PStr pStr = PStr.b();
 		String sql = "";
+		pStr.a("SELECT DISTINCT nmMajor FROM (");
 		pStr.a("SELECT nmMajor FROM ", DAO.TABLENAME,
 				" WHERE 1 = 1 ");
 		if (departid > 0) {
@@ -89,6 +90,7 @@ public class AdcoursesEntity extends AdcoursesInternal {
 		}
 		pStr.a(" GROUP BY nmMajor,createtime ");
 		pStr.a(" ORDER BY createtime DESC ");
+		pStr.a(" ) AS Tmp");
 		List<Map> result = new ArrayList<Map>();
 		try {
 			sql = pStr.e();
@@ -107,14 +109,16 @@ public class AdcoursesEntity extends AdcoursesInternal {
 		AdcoursesDAO DAO = AdcoursesDAO();
 		PStr pStr = PStr.b();
 		String sql = "";
+		pStr.a("SELECT DISTINCT nmMajor FROM (");
 		pStr.a("SELECT nmMajor FROM ", DAO.TABLENAME,
 				" WHERE 1 = 1 ");
 		if (!StrEx.isEmptyTrim(nmMajor)) {
 			pStr.a(" AND nmMajor like '%", nmMajor, "%'");
 		}
 
-		pStr.a(" GROUP BY nmMajor ");
+		pStr.a(" GROUP BY nmMajor,createtime ");
 		pStr.a(" ORDER BY createtime DESC ");
+		pStr.a(" ) AS Tmp");
 		List<Map> result = new ArrayList<Map>();
 		try {
 			sql = pStr.e();
@@ -133,6 +137,7 @@ public class AdcoursesEntity extends AdcoursesInternal {
 		AdcoursesDAO DAO = AdcoursesDAO();
 		PStr pStr = PStr.b();
 		String sql = "";
+		pStr.a("SELECT DISTINCT nmLevel FROM (");
 		pStr.a("SELECT nmLevel FROM ", DAO.TABLENAME, " WHERE 1 = 1 ");
 		if (departid > 0) {
 			pStr.a(" AND departid = ", departid);
@@ -142,9 +147,10 @@ public class AdcoursesEntity extends AdcoursesInternal {
 			pStr.a(" AND nmMajor = '", nmmajor + "'");
 		}
 
-		pStr.a(" GROUP BY nmLevel ");
+		pStr.a(" GROUP BY nmLevel,createtime ");
 
 		pStr.a(" ORDER BY createtime DESC ");
+		pStr.a(" ) AS Tmp");
 		List<String> result = new ArrayList<String>();
 		try {
 			sql = pStr.e();
@@ -168,6 +174,7 @@ public class AdcoursesEntity extends AdcoursesInternal {
 		AdcoursesDAO DAO = AdcoursesDAO();
 		PStr pStr = PStr.b();
 		String sql = "";
+		pStr.a("SELECT DISTINCT nmSub FROM (");
 		pStr.a("SELECT nmSub FROM ", DAO.TABLENAME, " WHERE 1 = 1 ");
 		if (departid > 0) {
 			pStr.a(" AND departid = ", departid);
@@ -181,9 +188,10 @@ public class AdcoursesEntity extends AdcoursesInternal {
 			pStr.a(" AND nmLevel = '", nmLevel + "'");
 		}
 
-		pStr.a(" GROUP BY nmSub ");
+		pStr.a(" GROUP BY nmSub,createtime ");
 
 		pStr.a(" ORDER BY createtime DESC ");
+		pStr.a(" ) AS Tmp");
 		List<String> result = new ArrayList<String>();
 		try {
 			sql = pStr.e();
@@ -207,6 +215,7 @@ public class AdcoursesEntity extends AdcoursesInternal {
 		AdcoursesDAO DAO = AdcoursesDAO();
 		PStr pStr = PStr.b();
 		String sql = "";
+		pStr.a("SELECT DISTINCT nmArea FROM (");
 		pStr.a("SELECT nmArea FROM ", DAO.TABLENAME, " WHERE 1 = 1 ");
 		if (departid > 0) {
 			pStr.a(" AND departid = ", departid);
@@ -224,9 +233,10 @@ public class AdcoursesEntity extends AdcoursesInternal {
 			pStr.a(" AND nmSub = '", nmSub, "'");
 		}
 
-		pStr.a(" GROUP BY nmArea ");
+		pStr.a(" GROUP BY nmArea,createtime ");
 
 		pStr.a(" ORDER BY createtime DESC ");
+		pStr.a(" ) AS Tmp");
 		List<String> result = new ArrayList<String>();
 		try {
 			sql = pStr.e();
