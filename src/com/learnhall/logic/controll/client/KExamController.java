@@ -260,6 +260,9 @@ public class KExamController {
 		PageKExam pageExam = initPageKExam(request, session, false);
 		if (pageExam.kind == null)
 			return "redirect:home";
+		
+		if(!pageExam.isBuyed)
+			return "redirect:home"; 
 
 		Map map = Svc.getMapAllParams(request);
 
