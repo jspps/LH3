@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<!-- <object classid="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2" height="0" width="0" id="WebBrowser"></object> -->
     			
 		<!-- 打印预览 -->
-		<div class="print-box">
+		<div class="print-box" style="margin-left: -686px;">
 			<span class="print-title">
 				打印预览
 			</span>
