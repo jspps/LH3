@@ -66,21 +66,21 @@ public class RecordanswerEntity extends RecordanswerInternal {
 				sql.append(" AND departid = ").append(departid);
 			}
 
-			if (!StrEx.isEmptyTrim(nmMajor)) {
+			if (!StrEx.isEmptyTrim(nmMajor) && !"-1".equals(nmMajor)) {
 				sql.append(" AND nmMajor = '").append(nmMajor.trim())
 						.append("'");
 			}
 
-			if (!StrEx.isEmptyTrim(nmLevel)) {
+			if (!StrEx.isEmptyTrim(nmLevel) && !"-1".equals(nmLevel)) {
 				sql.append(" AND nmLevel = '").append(nmLevel.trim())
 						.append("'");
 			}
 
-			if (!StrEx.isEmptyTrim(nmSub)) {
+			if (!StrEx.isEmptyTrim(nmSub) && !"-1".equals(nmSub)) {
 				sql.append(" AND nmSub = '").append(nmSub.trim()).append("'");
 			}
 
-			if (!StrEx.isEmptyTrim(nmArea)) {
+			if (!StrEx.isEmptyTrim(nmArea) && !"-1".equals(nmArea)) {
 				sql.append(" AND nmArea = '").append(nmArea.trim()).append("'");
 			}
 			sql.append(") ");
