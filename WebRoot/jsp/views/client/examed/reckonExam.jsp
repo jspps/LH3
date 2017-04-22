@@ -54,7 +54,7 @@
 			</div>
 			<c:forEach items="${reckon }" var="item" varStatus="itemStatus">
 			<c:set var="index" value="${ itemStatus.index + 1}"></c:set>
-			<c:set var="imgIndex" value="${141+item.type }"></c:set>
+			<c:set var="imgIndex" value="${141+item.type > 146 ? 146 : 141+item.type }"></c:set>
 			<div class="cjtj_list_cont">
 				<span class="cjtj_list_ico">
 					<img src="jsp/imgs/client/${imgIndex}.jpg" /> 

@@ -260,9 +260,9 @@ public class KExamController {
 		PageKExam pageExam = initPageKExam(request, session, false);
 		if (pageExam.kind == null)
 			return "redirect:home";
-		
-		if(!pageExam.isBuyed)
-			return "redirect:home"; 
+
+		if (!pageExam.isBuyed)
+			return "redirect:home";
 
 		Map map = Svc.getMapAllParams(request);
 
@@ -306,15 +306,15 @@ public class KExamController {
 
 			if (mapAnwer == null)
 				mapAnwer = new HashMap<Integer, String>();
-			
+
 			modelMap.addAttribute("answers", mapAnwer);
-			
+
 			if (mapScore == null)
 				mapScore = new HashMap<Integer, Integer>();
-			
+
 			modelMap.addAttribute("scores", mapScore);
 		}
-		
+
 		modelMap.addAttribute("isShowAnswer", isShowAnswer);
 		return "client/printView";
 	}

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bowlong.json.MyJson;
 import com.bowlong.lang.PStr;
@@ -37,6 +38,7 @@ import com.learnhall.db.bean.Recordanswer;
 import com.learnhall.db.bean.Recordques4exam;
 import com.learnhall.db.entity.AdcoursesEntity;
 import com.learnhall.db.entity.ExamEntity;
+import com.learnhall.db.entity.ExamcatalogEntity;
 import com.learnhall.db.entity.OptquestionEntity;
 import com.learnhall.db.entity.ProductEntity;
 import com.learnhall.db.entity.RecordanswerEntity;
@@ -257,20 +259,20 @@ public class ExamingController {
 				allScore += ecatalog.getEveryScore();
 				mapLeft.put("serial", ecatalog.getSerial());
 				mapLeft.put("bigtypes", ecatalog.getBigtypes());
-				
+
 				String elps = StrEx.ellipsis(ecatalog.getTitle(), 10);
 				int index = elps.indexOf("<img");
-				if(index != -1){
+				if (index != -1) {
 					elps = elps.substring(0, index);
 					elps += "...";
 				}
-				
+
 				index = elps.indexOf("<p");
-				if(index != -1){
+				if (index != -1) {
 					elps = elps.substring(0, index);
 					elps += "...";
 				}
-				mapLeft.put("titleEllipsis",elps);
+				mapLeft.put("titleEllipsis", elps);
 			}
 
 			listLeft.add(mapLeft);
@@ -358,10 +360,11 @@ public class ExamingController {
 				viewCurOpt = mapQues.get(curOptId);
 			}
 		}
-		
+
 		Map oneQuest = viewCurOpt.toBasicMap();
-		oneQuest.put("isOldContent",viewCurOpt.getContent().indexOf("<p") == -1);
-		
+		oneQuest.put("isOldContent",
+				viewCurOpt.getContent().indexOf("<p") == -1);
+
 		modelMap.addAttribute("curOpt", oneQuest);
 		modelMap.addAttribute("isOver", isMax ? 0 : 1);
 		modelMap.addAttribute("curExamLen", maxLen);
@@ -575,8 +578,8 @@ public class ExamingController {
 		int scoreAll = 0;
 		int avecorrectrate = 0;
 
-		// 用于记录试卷目录结构
-		Map<Integer, Map<String, Object>> tmpMap = new HashMap<Integer, Map<String, Object>>();
+		// 用于记录试卷目录结构key = [type_gid]
+		Map<String, Map<String, Object>> tmpMap = new HashMap<String, Map<String, Object>>();
 
 		// 计算正确率的
 		int lensAll = 0;
@@ -585,17 +588,17 @@ public class ExamingController {
 		// 记录试卷所有题的得分
 		Map<Integer, Integer> mapScores = new HashMap<Integer, Integer>();
 
+		// 是否有主观评分
+		boolean isHasSubjective = false;
+
 		for (Entry<Integer, Optquestion> entry : mapQues.entrySet()) {
 			int curOptId = entry.getKey();
 			Optquestion optques = entry.getValue();
 			int catalogType = optques.getType();
+			int catalogGid = optques.getGid();
 
 			// 该次考试的题总数
 			lensAll++;
-
-			// 首次只去看单选，多选，判断
-			if (catalogType > 3)
-				continue;
 
 			String answer = "";
 			int curScore = 0;
@@ -603,8 +606,16 @@ public class ExamingController {
 				if (mapAnswer.containsKey(curOptId))
 					answer = mapAnswer.get(curOptId);
 			}
-			String rightStr = optques.getRight_2();
-			boolean isRight = rightStr.equals(answer);
+			
+			boolean isRight = false;
+			// 首次只去看单选，多选，判断
+			if ((catalogType == 7 && (catalogGid <= 0 || catalogGid > 3))
+					|| (catalogType > 3 && catalogType < 7)) {
+				isHasSubjective = true;
+			}else{
+				String rightStr = optques.getRight_2();
+				isRight = rightStr.equals(answer);
+			}
 			int score = 0;
 
 			String serial = "一";
@@ -618,6 +629,10 @@ public class ExamingController {
 
 			if (examCatalog != null) {
 				score = examCatalog.getEveryScore();
+				
+				if(examCatalog.getParentid() > 0){
+					examCatalog = ExamcatalogEntity.getByKey(examCatalog.getParentid());
+				}
 				serial = examCatalog.getSerial();
 				bigtypes = examCatalog.getBigtypes();
 			}
@@ -625,7 +640,8 @@ public class ExamingController {
 			// 记录考题
 			recordQues4Cust(customer, curOptId, catalogType, isRight);
 
-			Map<String, Object> mapCata = tmpMap.get(catalogType);
+			String keyCata = serial;
+			Map<String, Object> mapCata = tmpMap.get(keyCata);
 			if (mapCata == null) {
 				mapCata = new HashMap<String, Object>();
 			}
@@ -653,7 +669,7 @@ public class ExamingController {
 			mapCata.put("serial", serial);
 			mapCata.put("bigtypes", bigtypes);
 
-			tmpMap.put(catalogType, mapCata);
+			tmpMap.put(keyCata, mapCata);
 			mapScores.put(curOptId, curScore);
 		}
 
@@ -671,12 +687,14 @@ public class ExamingController {
 		result.put("mapScores", mapScores);
 		result.put("lens4exam", lensAll);
 		result.put("lens4right", lensAll4Right);
+		result.put("isHasSubjective", isHasSubjective);
 		return result;
 	}
 
 	@RequestMapping("/saveAnswers")
 	public String saveAnswers(HttpServletRequest request,
-			HttpServletResponse response, ModelMap modelMap, HttpSession session) {
+			HttpServletResponse response, ModelMap modelMap,
+			HttpSession session, RedirectAttributes attr) {
 		Map mapPars = Svc.getMapAllParams(request);
 		int examid = MapEx.getInt(mapPars, "examid");
 		int preExamId = 0;
@@ -714,6 +732,7 @@ public class ExamingController {
 
 		Map map4Reckon = reckon4Exam(customer, costTimeMs, mapAnswer, mapQues,
 				mapECatalog);
+
 		List reckon = MapEx.getList(map4Reckon, "reckon");
 		Map reckonMap = MapEx.getMap(map4Reckon, "reckonMap");
 		int scoreAll = MapEx.getInt(map4Reckon, "scoreAll");
@@ -788,6 +807,16 @@ public class ExamingController {
 		/*** 考完成绩分数 **/
 		modelMap.addAttribute("examed", map2UI);
 		modelMap.addAttribute("reckon", reckon);
+
+		boolean isHasSubjective = MapEx.getBoolean(map4Reckon,
+				"isHasSubjective");
+		
+		if (!isHasSubjective) {
+			// attr.addAttribute("reqType", 0);
+			// return "redirect:seeAnswer";
+			return "redirect:reckonExam";
+		}
+		
 		if (custid > 0) {
 			return "client/exam4subject/examedScore";
 		} else {
@@ -829,7 +858,7 @@ public class ExamingController {
 		/*** 考完成绩分数 **/
 		modelMap.addAttribute("reckon", reckon);
 		modelMap.addAttribute("examed", examMap);
-		return "client/examed/examedScore4ITMS";
+		return "client/examed/reckonExam4ITMS";
 	}
 
 	/*** 取得纠错界面用着弹出界面 **/
@@ -1059,10 +1088,13 @@ public class ExamingController {
 		byte[] catalog = recordanswer.getCatalog();
 		Map map = Utls.bytes2Map(catalog);
 		List reckon = ListEx.valueToList(map);
+		
+		Collections.sort(reckon, new ComparatorExamcatalogMap());
+		
 		/*** 考完成绩分数 **/
 		modelMap.addAttribute("examed", recordanswer.toBasicMap());
 		modelMap.addAttribute("reckon", reckon);
-		return "client/examed/examedScore";
+		return "client/examed/reckonExam";
 	}
 
 	/*** 试卷考试错题重做 **/
