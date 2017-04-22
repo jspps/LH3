@@ -197,6 +197,9 @@
 			var val = "";
 			if(curAnswer != null){
 				var curType = $("#curOptType").val();
+				if(curType == "7"){
+					curType = $("#curOptGid").val();	
+				}
 				curType = parseInt(curType,10);
 				switch(curType){
 					case 1:
@@ -236,6 +239,10 @@
 						break;
 					case 5:
 						// 简答题答案
+						$(".jiandadaan").val(curAnswer);
+						break;
+					case 6:
+						// 论述题答案
 						$(".jiandadaan").val(curAnswer);
 						break;
 				};
