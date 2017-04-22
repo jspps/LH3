@@ -132,10 +132,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tbody>
 						<tr>
 							<td>得分</td>
-							<c:forEach begin="0" end="${lens - 1}" step="1">
-							<td></td>
+							<c:forEach items="${list}" var="item">
+							<td>
+							<c:if test="${isShowAnswer}">
+								<tag:map key="${item.serial}" data="${statistics}" defVal="0"></tag:map>
+							</c:if>
+							</td>
 							</c:forEach>
-							<td></td>
+							<td>
+								<c:if test="${isShowAnswer}">
+								<tag:map key="all" data="${statistics}" defVal="0"></tag:map>
+								</c:if>
+							</td>
 						</tr>
 					</tbody>
 				</table>

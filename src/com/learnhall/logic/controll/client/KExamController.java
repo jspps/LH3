@@ -3,6 +3,7 @@ package com.learnhall.logic.controll.client;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -292,6 +293,8 @@ public class KExamController {
 		if (isShowAnswer) {
 			Map<Integer, String> mapAnwer = null;
 			Map<Integer, Integer> mapScore = null;
+			Map<String,Integer> mapGetScore = new HashMap<String, Integer>();
+			
 			int custid = Utls.getCustomerId(session);
 			Recordanswer recordanswer = (Recordanswer) session
 					.getAttribute(SessionKeys.CurExamRecord);
@@ -302,6 +305,15 @@ public class KExamController {
 					&& custid == recordanswer.getCustomerid()) {
 				mapAnwer = Utls.bytes2Map(recordanswer.getAnwers());
 				mapScore = Utls.bytes2Map(recordanswer.getScore4ques());
+				Map<String,Map<String,Object>> mapTemp = Utls.bytes2Map(recordanswer.getCatalog());
+				int val = 0;
+				int sum = 0;
+				for (Entry<String, Map<String, Object>> item : mapTemp.entrySet()) {
+					val = MapEx.getInt(item.getValue(), "scoreRight");
+					sum += val;
+					mapGetScore.put(item.getKey(), val);
+				}
+				mapGetScore.put("all", sum);
 			}
 
 			if (mapAnwer == null)
@@ -313,6 +325,8 @@ public class KExamController {
 				mapScore = new HashMap<Integer, Integer>();
 
 			modelMap.addAttribute("scores", mapScore);
+			
+			modelMap.addAttribute("statistics", mapGetScore);
 		}
 
 		modelMap.addAttribute("isShowAnswer", isShowAnswer);
