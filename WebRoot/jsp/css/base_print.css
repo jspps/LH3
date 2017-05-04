@@ -423,7 +423,7 @@ persen-index .answer-box,
 }
 
 .persen-index .question-list .l {
-    width: 200px;
+    min-width: 200px;
     display: inline-block!important;
 }
 

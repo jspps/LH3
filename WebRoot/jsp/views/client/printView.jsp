@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</span>
 			<span class="select-list">
 				<span class="mechanism">
-					<input type="checkbox" id="mechanism-logo" class="regular-checkbox" name="is_printLogo" id="is_printLogo" onchange="OnChangeLogo(this.checked)">
+					<input type="checkbox" id="mechanism-logo" class="regular-checkbox" name="is_printLogo" onchange="OnChangeLogo(this.checked)" />
 					<label for="mechanism-logo">
 						<i>机构LOGO</i>
 					</label>
@@ -58,13 +58,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</span>
 	
 				<span>
-					<input type="checkbox" id="contain-answer" class="regular-checkbox" name="is_printAnswer" id="is_printAnswer" onchange="OnChangeAnswer(this.checked)">
+					<input type="checkbox" id="contain-answer" class="regular-checkbox" name="is_printAnswer" onchange="OnChangeAnswer(this.checked)" />
 					<label for="contain-answer">
 						<i>包含答案</i>
 					</label>
+					
 				</span>
-				
-				
 			</span>
 			
 			<span class="print-button-box t-center">
